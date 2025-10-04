@@ -1,0 +1,13 @@
+{
+  "title": "Fireball",
+  "body": {
+    "when": "During your main phase",
+    "target": "Choose one creature or player",
+    "effect": "Deal 3 damage to the chosen target",
+    "restriction": "You must have at least one red mana available"
+  },
+  "cost": {
+    "red": 2,
+    "colorless": 1
+  }
+}
