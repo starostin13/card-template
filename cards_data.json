@@ -1,28 +1,60 @@
 {
   "cards": [
     {
-      "title": "Welcome Card",
-      "subtitle": "Hello World",
-      "description": "This is a sample card with custom content.",
-      "footer": "Card #1"
+      "title": "Lightning Bolt",
+      "color": "#d32f2f",
+      "body": {
+        "when": "As an instant",
+        "target": "Choose any target",
+        "effect": "Deal 3 damage to any target",
+        "restriction": "None"
+      },
+      "cost": {
+        "red": 1,
+        "colorless": 0
+      }
     },
     {
-      "title": "Information Card",
-      "subtitle": "Important Details",
-      "description": "You can add any information you need on these cards.",
-      "footer": "Card #2"
+      "title": "Healing Potion",
+      "color": "#fdd835",
+      "body": {
+        "when": "During your main phase",
+        "target": "Choose one creature or yourself",
+        "effect": "Restore 5 health to the chosen target",
+        "restriction": "Can only be used once per turn"
+      },
+      "cost": {
+        "white": 1,
+        "colorless": 1
+      }
     },
     {
-      "title": "Contact Card",
-      "subtitle": "Get in Touch",
-      "description": "Email: contact@example.com\nPhone: (555) 123-4567",
-      "footer": "Card #3"
+      "title": "Forest Guardian",
+      "color": "#388e3c",
+      "body": {
+        "when": "When summoned",
+        "target": "All creatures you control",
+        "effect": "Give +1/+1 to all your creatures until end of turn",
+        "restriction": "Must control a forest"
+      },
+      "cost": {
+        "green": 2,
+        "colorless": 2
+      }
     },
     {
-      "title": "Event Card",
-      "subtitle": "Special Occasion",
-      "description": "Date: December 25, 2024\nTime: 10:00 AM\nLocation: Community Center",
-      "footer": "Card #4"
+      "title": "Mind Control",
+      "color": "#1976d2",
+      "body": {
+        "when": "During your main phase",
+        "target": "Choose one enemy creature",
+        "effect": "Take control of target creature until end of turn",
+        "restriction": "Target creature must have power 3 or less"
+      },
+      "cost": {
+        "blue": 3,
+        "colorless": 1
+      }
     }
   ]
 }
