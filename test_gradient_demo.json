@@ -1,0 +1,46 @@
+{
+  "cards": [
+    {
+      "title": "Lightning Strike",
+      "color": "#ff3333",
+      "body": {
+        "when": "Instant",
+        "target": "Any target",
+        "effect": "Deal damage",
+        "restriction": "None"
+      },
+      "cost": {
+        "red": 1,
+        "colorless": 0
+      }
+    },
+    {
+      "title": "Forest Guardian",
+      "color": "#33aa33",
+      "body": {
+        "when": "Summoned",
+        "target": "All creatures",
+        "effect": "Boost power",
+        "restriction": "Forest"
+      },
+      "cost": {
+        "green": 3,
+        "colorless": 2
+      }
+    },
+    {
+      "title": "Ocean Wave",
+      "color": "#3366ff",
+      "body": {
+        "when": "Main phase",
+        "target": "All enemies",
+        "effect": "Wash away",
+        "restriction": "None"
+      },
+      "cost": {
+        "blue": 2,
+        "colorless": 1
+      }
+    }
+  ]
+}

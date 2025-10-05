@@ -29,6 +29,20 @@
       }
     },
     {
+      "title": "Lightning Bolt",
+      "color": "#d32f2f",
+      "body": {
+        "when": "As an instant",
+        "target": "Choose any target",
+        "effect": "Deal 3 damage",
+        "restriction": "None"
+      },
+      "cost": {
+        "red": 1,
+        "colorless": 0
+      }
+    },
+    {
       "title": "Forest Guardian",
       "color": "#388e3c",
       "body": {
@@ -43,17 +57,31 @@
       }
     },
     {
-      "title": "Mind Control",
-      "color": "#1976d2",
+      "title": "Lightning Bolt",
+      "color": "#d32f2f",
       "body": {
-        "when": "During your main phase",
-        "target": "Choose one enemy creature",
-        "effect": "Take control of target creature until end of turn",
-        "restriction": "Target creature must have power 3 or less"
+        "when": "As an instant",
+        "target": "Choose any target", 
+        "effect": "Deal 3 damage",
+        "restriction": "None"
       },
       "cost": {
-        "blue": 3,
-        "colorless": 1
+        "red": 1,
+        "colorless": 0
+      }
+    },
+    {
+      "title": "Forest Guardian",
+      "color": "#388e3c",
+      "body": {
+        "when": "When summoned",
+        "target": "All your creatures",
+        "effect": "Give +1/+1",
+        "restriction": "Must control a forest"
+      },
+      "cost": {
+        "green": 2,
+        "colorless": 2
       }
     }
   ]

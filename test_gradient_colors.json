@@ -1,0 +1,60 @@
+{
+  "cards": [
+    {
+      "title": "Fire Dragon",
+      "color": "#ff4444",
+      "body": {
+        "when": "When summoned",
+        "target": "All enemies",
+        "effect": "Burn damage",
+        "restriction": "None"
+      },
+      "cost": {
+        "red": 5,
+        "colorless": 2
+      }
+    },
+    {
+      "title": "Ice Spell",
+      "color": "#4444ff",
+      "body": {
+        "when": "As instant",
+        "target": "One creature",
+        "effect": "Freeze target",
+        "restriction": "None"
+      },
+      "cost": {
+        "blue": 2,
+        "colorless": 1
+      }
+    },
+    {
+      "title": "Nature Spirit",
+      "color": "#44ff44",
+      "body": {
+        "when": "During main phase",
+        "target": "All plants",
+        "effect": "Grow bigger",
+        "restriction": "Forest only"
+      },
+      "cost": {
+        "green": 3,
+        "colorless": 1
+      }
+    },
+    {
+      "title": "Shadow Assassin",
+      "color": "#444444",
+      "body": {
+        "when": "From shadows",
+        "target": "One enemy",
+        "effect": "Stealth attack",
+        "restriction": "Night only"
+      },
+      "cost": {
+        "black": 4,
+        "colorless": 2
+      }
+    }
+  ]
+}

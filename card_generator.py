@@ -13,20 +13,39 @@ from reportlab.lib.pagesizes import letter, A4
 from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
 from reportlab.lib.colors import HexColor, black, white
+from reportlab.lib.utils import ImageReader
+import os
+from image_search import ImageSearcher
+from PIL import Image, ImageDraw, ImageFilter
+import io
 
 
 class CardGenerator:
     """Generate PDF cards from JSON data."""
     
-    def __init__(self, page_size=letter):
+    def __init__(self, page_size=letter, auto_search_images=False, gradient_enabled=True):
         """
         Initialize the card generator.
         
         Args:
             page_size: The page size for the PDF (default: letter)
+            auto_search_images: Whether to automatically search for images (default: False)
+            gradient_enabled: Whether to apply gradient effects to images (default: True)
         """
         self.page_size = page_size
         self.page_width, self.page_height = page_size
+        self.auto_search_images = auto_search_images
+        self.gradient_enabled = gradient_enabled
+        
+        # Initialize image searcher if auto search is enabled
+        if self.auto_search_images:
+            self.image_searcher = ImageSearcher()
+            print("Auto image search enabled")
+        else:
+            self.image_searcher = None
+        
+        if self.gradient_enabled:
+            print("Gradient effects enabled")
         
         # Card dimensions (120mm x 65mm)
         self.card_width = 65 * 0.0393701 * inch  # 65mm to inches
@@ -168,6 +187,39 @@ class CardGenerator:
             text_y = y + card_h - 0.7 * inch
             c.setFillColor(self.text_color)
             
+            # Calculate space usage
+            used_lines, total_lines = self._calculate_body_space_usage(body)
+            space_usage_percent = (used_lines / total_lines) * 100 if total_lines > 0 else 100
+            
+            # Check if we should add an image (less than 50% space used)
+            should_add_image = space_usage_percent < 50
+            image_path = card_data.get('image')
+            image_added = False
+            
+            if should_add_image and image_path:
+                # Calculate available space for image
+                used_height = used_lines * 0.15 * inch
+                available_height = 2.3 * inch - used_height
+                
+                # Try to draw image
+                if available_height > 0.5 * inch:  # Minimum height for image
+                    image_added = self._draw_card_image(c, x, text_y - 2.0 * inch, 
+                                                      card_w, card_h, image_path, available_height)
+            
+            # If no manual image specified but auto search is enabled and space is available
+            elif should_add_image and self.auto_search_images and not image_path:
+                print(f"Auto-searching image for card: {card_data.get('title', 'Unknown')}")
+                auto_image_path = self.image_searcher.get_image_for_card(card_data)
+                if auto_image_path:
+                    # Calculate available space for image
+                    used_height = used_lines * 0.15 * inch
+                    available_height = 2.3 * inch - used_height
+                    
+                    # Try to draw auto-found image
+                    if available_height > 0.5 * inch:  # Minimum height for image
+                        image_added = self._draw_card_image(c, x, text_y - 2.0 * inch, 
+                                                          card_w, card_h, auto_image_path, available_height)
+            
             # When
             when = body.get('when', '')
             if when:
@@ -252,6 +304,174 @@ class CardGenerator:
             lines.append(current_line)
         
         return lines
+    
+    def _hex_to_rgb(self, hex_color):
+        """Convert hex color to RGB tuple."""
+        hex_color = hex_color.lstrip('#')
+        return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+    
+    def _create_gradient_mask(self, width, height, gradient_size=40):
+        """Create a gradient mask for blending image with background."""
+        mask = Image.new('L', (width, height), 255)  # Start with white (fully opaque)
+        draw = ImageDraw.Draw(mask)
+        
+        # Create gradients on all edges with smoother transition
+        for i in range(gradient_size):
+            # Use quadratic easing for smoother gradient
+            progress = i / gradient_size
+            opacity = int(255 * (progress * progress))
+            
+            # Top gradient
+            draw.rectangle([i, i, width-1-i, i], fill=opacity)
+            # Bottom gradient  
+            draw.rectangle([i, height-1-i, width-1-i, height-1-i], fill=opacity)
+            # Left gradient
+            draw.rectangle([i, i, i, height-1-i], fill=opacity)
+            # Right gradient
+            draw.rectangle([width-1-i, i, width-1-i, height-1-i], fill=opacity)
+        
+        # Apply blur for even smoother transition
+        mask = mask.filter(ImageFilter.GaussianBlur(radius=3))
+        return mask
+    
+    def _process_image_with_gradient(self, image_path, target_width, target_height):
+        """Process image to add gradient blending with card background color (gray)."""
+        try:
+            # Open and resize the image
+            with Image.open(image_path) as img:
+                # Convert to RGBA if not already
+                if img.mode != 'RGBA':
+                    img = img.convert('RGBA')
+                
+                # Calculate size maintaining aspect ratio
+                img_ratio = img.width / img.height
+                target_ratio = target_width / target_height
+                
+                if img_ratio > target_ratio:
+                    # Image is wider, fit to width
+                    new_width = int(target_width)
+                    new_height = int(target_width / img_ratio)
+                else:
+                    # Image is taller, fit to height
+                    new_height = int(target_height)
+                    new_width = int(target_height * img_ratio)
+                
+                # Resize image
+                img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+                
+                # Create background with gray card color (#f5f5f5)
+                bg_color = (245, 245, 245)  # Gray background of the card
+                background = Image.new('RGBA', (int(target_width), int(target_height)), bg_color + (255,))
+                
+                # Center the image on background
+                x_offset = (int(target_width) - new_width) // 2
+                y_offset = (int(target_height) - new_height) // 2
+                
+                # Create gradient mask
+                gradient_size = min(50, new_width // 6, new_height // 6)  # Larger gradient for better effect
+                mask = self._create_gradient_mask(new_width, new_height, gradient_size)
+                
+                # Create a more pronounced edge blend
+                # First, darken the edges slightly to create depth
+                edge_overlay = Image.new('RGBA', (new_width, new_height), (0, 0, 0, 0))
+                edge_draw = ImageDraw.Draw(edge_overlay)
+                edge_thickness = gradient_size // 2
+                for i in range(edge_thickness):
+                    alpha = int(30 * (1 - i / edge_thickness))  # Subtle darkening
+                    edge_draw.rectangle([i, i, new_width-1-i, new_height-1-i], 
+                                      outline=(*bg_color, alpha), width=1)
+                
+                # Composite edge overlay onto image
+                img = Image.alpha_composite(img, edge_overlay)
+                
+                # Apply main gradient mask
+                img.putalpha(mask)
+                
+                # Paste image onto background
+                background.paste(img, (x_offset, y_offset), img)
+                
+                # Convert back to RGB for PDF
+                final_image = background.convert('RGB')
+                
+                # Save to memory buffer
+                buffer = io.BytesIO()
+                final_image.save(buffer, format='JPEG', quality=85)
+                buffer.seek(0)
+                
+                return ImageReader(buffer)
+                
+        except Exception as e:
+            print(f"Error processing image with gradient: {e}")
+            return None
+    
+    def _calculate_body_space_usage(self, body_data):
+        """Calculate how much space is used by body text."""
+        if not body_data:
+            return 0, 0  # used_lines, total_available_lines
+        
+        # Available space for body content (from header to cost section)
+        body_height = 2.3 * inch  # Approximate available height for body
+        line_height = 0.15 * inch  # Height per line of text
+        total_available_lines = int(body_height / line_height)
+        
+        used_lines = 0
+        
+        # Count lines for each body section
+        sections = ['when', 'target', 'effect', 'restriction']
+        for section in sections:
+            content = body_data.get(section, '')
+            if content and (section != 'restriction' or content.lower() != 'none'):
+                used_lines += 1  # For the label
+                if section == 'effect':
+                    # Effect can span multiple lines
+                    effect_lines = self._wrap_text(content, 32)
+                    used_lines += min(len(effect_lines), 2)  # Max 2 lines for effect
+                elif section == 'restriction':
+                    # Restriction can span multiple lines
+                    restriction_lines = self._wrap_text(content, 35)
+                    used_lines += min(len(restriction_lines), 2)  # Max 2 lines for restriction
+        
+        return used_lines, total_available_lines
+    
+    def _draw_card_image(self, c, x, y, card_w, card_h, image_path, available_height):
+        """Draw card image with gradient blending if file exists and there's enough space."""
+        if not image_path or not os.path.exists(image_path):
+            return False
+        
+        try:
+            # Calculate image dimensions (maintain aspect ratio)
+            max_width = card_w * 0.8  # 80% of card width
+            max_height = available_height * 0.8  # 80% of available height
+            
+            # Process image with gradient effect if enabled
+            if self.gradient_enabled:
+                processed_image = self._process_image_with_gradient(
+                    image_path, max_width, max_height
+                )
+            else:
+                processed_image = None
+            
+            if processed_image:
+                # Position image in the center of available space
+                img_x = x + (card_w - max_width) / 2
+                img_y = y + 0.3 * inch  # Some margin from bottom
+                
+                # Draw the processed image
+                c.drawImage(processed_image, img_x, img_y, width=max_width, height=max_height,
+                           preserveAspectRatio=True, mask='auto')
+                return True
+            else:
+                # Use original method if gradient processing is disabled or fails
+                img_x = x + (card_w - max_width) / 2
+                img_y = y + 0.3 * inch
+                c.drawImage(image_path, img_x, img_y, width=max_width, height=max_height,
+                           preserveAspectRatio=True, mask='auto')
+                return True
+                
+        except Exception as e:
+            # If image loading fails, silently continue without image
+            print(f"Warning: Could not load image {image_path}: {e}")
+            return False
     
     def generate_pdf(self, json_file, output_file):
         """
@@ -351,6 +571,18 @@ Example usage:
         help='Page size for the PDF (default: letter)'
     )
     
+    parser.add_argument(
+        '--auto-search',
+        action='store_true',
+        help='Automatically search and download images for cards based on their content'
+    )
+    
+    parser.add_argument(
+        '--no-gradients',
+        action='store_true',
+        help='Disable gradient effects on images (use original images as-is)'
+    )
+    
     args = parser.parse_args()
     
     # Validate input file
@@ -364,7 +596,11 @@ Example usage:
     
     # Generate PDF
     try:
-        generator = CardGenerator(page_size=page_size)
+        generator = CardGenerator(
+            page_size=page_size, 
+            auto_search_images=args.auto_search,
+            gradient_enabled=not args.no_gradients
+        )
         generator.generate_pdf(args.input, args.output)
         return 0
     except Exception as e:

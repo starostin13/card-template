@@ -1,6 +1,7 @@
 {
   "title": "Fireball",
   "color": "#d32f2f",
+  "image": "fireball.jpg",
   "body": {
     "when": "During your main phase",
     "target": "Choose one creature or player",

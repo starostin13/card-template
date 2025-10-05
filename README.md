@@ -1,15 +1,36 @@
-# card-template
+# Card Template Generator
 
-A Python application that generates PDF files with multiple cards having similar design, where content is loaded from a JSON file.
+A sophisticated Python application that generates professional PDF files with game-style cards. Features advanced card design, automatic image search, and gradient visual effects.
 
 ## Features
 
-- Generate professional-looking cards in PDF format
+### 🎨 **Advanced Card Design**
+- Generate professional game-style cards in PDF format
+- Individual color themes for each card
+- Gray background for better text contrast
+- Customizable card dimensions (120mm x 65mm)
+- Optimized layout with no margins for maximum space utilization
+
+### 🖼️ **Smart Image Integration**
+- **Automatic image search** based on card content
+- **Intelligent space detection** - images only added when <50% space used
+- **Gradient blending effects** - images blend seamlessly with card background
+- **Smart caching system** - identical cards use the same images
+- Support for manual image specification
+
+### ⚙️ **Flexible Configuration**
 - Load card content from JSON files
-- Customizable card design with title, subtitle, description, and footer
-- Multiple cards per page layout
 - Support for both Letter and A4 page sizes
-- Clean and modern card design
+- Optional gradient effects (can be disabled)
+- Automatic or manual image modes
+- Rate-limited web requests with fallback sources
+
+### 🎮 **Game Card Structure**
+- **Title** with individual color themes
+- **Mana cost** system with breakdown
+- **Body sections**: When, Target, Effect, Restriction
+- **Colored keywords** matching card theme
+- Professional typography and layout
 
 ## Installation
 
