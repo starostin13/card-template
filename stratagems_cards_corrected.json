@@ -1,0 +1,364 @@
+{
+  "cards": [
+    {
+      "title": "EXPLOSIVE CLEARANCE",
+      "color": "#8B4513",
+      "body": {
+        "when": "Your Shooting phase.",
+        "target": "One unit from your army that has not been selected to shoot ...",
+        "effect": "Select one model in your unit that is equipped with a weapon with the [BLAST] ability. Until the end...",
+        "restriction": "Your turn • Shooting phase"
+      },
+      "cost": {
+        "cp": 1,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Boarding Actions – Battle Tactic Stratagem",
+        "legend": "A well-placed explosive munition in confined shipboard spaces can cause bloody carnage."
+      }
+    },
+    {
+      "title": "COMMAND RE-ROLL",
+      "color": "#8B4513",
+      "body": {
+        "when": "Any phase, just after you have made a Hit roll, a Wound roll, a Damage roll, a s...",
+        "target": "That unit or model from your army.",
+        "effect": "You re-roll that roll, test or saving throw.",
+        "restriction": "Either player’s turn • Any phase"
+      },
+      "cost": {
+        "cp": 1,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Boarding Actions – Epic Deed Stratagem",
+        "legend": "A great commander can bend even the vagaries of fate and fortune to their will, the better to ensure victory."
+      }
+    },
+    {
+      "title": "INSANE BRAVERY",
+      "color": "#8B4513",
+      "body": {
+        "when": "Battle-shock step of your Command phase, just after you have failed a Battle-sho...",
+        "target": "The unit from your army that Battle-shock test was just take...",
+        "effect": "Your unit is treated as having passed that test instead, and is not Battle-shocked as a result.",
+        "restriction": "Your turn • Command phase"
+      },
+      "cost": {
+        "cp": 1,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Boarding Actions – Epic Deed Stratagem",
+        "legend": "Indifferent to their own survival, these warriors hold their ground against seemingly impossible odds."
+      }
+    },
+    {
+      "title": "BATTLEFIELD COMMAND",
+      "color": "#8B4513",
+      "body": {
+        "when": "Start or end of any phase.",
+        "target": "One Leader unit from your army and one friendly Bodyguard un...",
+        "effect": "Select one of your Leader unit’s Leader abilities. Until the start of your next Command phase, that ...",
+        "restriction": "Either player’s turn • Any phase"
+      },
+      "cost": {
+        "cp": 1,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Boarding Actions – Strategic Ploy Stratagem",
+        "legend": "The commander's authoritative tone cuts through the din of battle, guiding the actions of nearby troops."
+      }
+    },
+    {
+      "title": "COUNTER-OFFENSIVE",
+      "color": "#8B4513",
+      "body": {
+        "when": "Fight phase, just after an enemy unit has fought.",
+        "target": "One unit from your army that is within Engagement Range of o...",
+        "effect": "Your unit fights next.",
+        "restriction": "Either player’s turn • Fight phase"
+      },
+      "cost": {
+        "cp": 2,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Boarding Actions – Strategic Ploy Stratagem",
+        "legend": "In close-quarters combat, the slightest hesitation can leave an opening for a swift foe to exploit."
+      }
+    },
+    {
+      "title": "RENEWED FOCUS",
+      "color": "#8B4513",
+      "body": {
+        "when": "Your Shooting phase or your Fight phase.",
+        "target": "One unit from your army that has not been selected to shoot ...",
+        "effect": "Until the end of the phase, each time a model in your unit makes an attack, re-roll a Hit roll of 1 ...",
+        "restriction": "Your turn • Shooting or Fight phase"
+      },
+      "cost": {
+        "cp": 0,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Challenger – Battle Tactic Stratagem",
+        "legend": "Shutting out the din of battle, these warriors focus only on their foes, unleashing an inescapable fusillade of death and destruction."
+      }
+    },
+    {
+      "title": "GREAT HASTE",
+      "color": "#8B4513",
+      "body": {
+        "when": "Your Movement phase.",
+        "target": "One unit from your army that has not been selected to move t...",
+        "effect": "Until the end of the phase, add D6\" to the Move characteristic of models in your unit.",
+        "restriction": "Your turn • Movement phase"
+      },
+      "cost": {
+        "cp": 0,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Challenger – Strategic Ploy Stratagem",
+        "legend": "Speed is often the key to victory, and this unit is blessed with exceptional celerity."
+      }
+    },
+    {
+      "title": "BURST OF SPEED",
+      "color": "#8B4513",
+      "body": {
+        "when": "End of your Shooting phase.",
+        "target": "One unit from your army (excluding units that made a move th...",
+        "effect": "Your unit can make a Normal move of up to D6\", and then cannot move again this phase.",
+        "restriction": "Your turn • Shooting phase"
+      },
+      "cost": {
+        "cp": 0,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Challenger – Strategic Ploy Stratagem",
+        "legend": "Having unleashed hell upon their target, this unit presses forward, lent fresh speed and impetus by the invigorating thrill of battle."
+      }
+    },
+    {
+      "title": "OPPORTUNISTIC STRIKE",
+      "color": "#8B4513",
+      "body": {
+        "when": "Your Shooting phase.",
+        "target": "One unit from your army that is not within Engagement Range ...",
+        "effect": "Select one enemy unit that is not within Engagement Range of one or more units from your army and is...",
+        "restriction": "Your turn • Shooting phase"
+      },
+      "cost": {
+        "cp": 0,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Challenger – Strategic Ploy Stratagem",
+        "legend": "Taking advantage of the foe’s exposed position, these warriors launch a well-timed attack."
+      }
+    },
+    {
+      "title": "FORCE A BREACH",
+      "color": "#8B4513",
+      "body": {
+        "when": "Your Movement phase.",
+        "target": "One unit from your army that has not been selected to move t...",
+        "effect": "Until the end of the phase, each time your unit makes a Normal or Advance move, it can move horizont...",
+        "restriction": "Your turn • Movement phase"
+      },
+      "cost": {
+        "cp": 0,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Challenger – Strategic Ploy Stratagem",
+        "legend": "Break through their defences, smash down their walls and barricades and breach their lines. Let no obstacle halt your progress."
+      }
+    },
+    {
+      "title": "STRATEGIC RETREAT",
+      "color": "#8B4513",
+      "body": {
+        "when": "Start of your Shooting phase.",
+        "target": "One unit from your army (excluding MONSTERS and VEHICLES) th...",
+        "effect": "Remove your unit from the battlefield and place it into Strategic Reserves.",
+        "restriction": "Your turn • Shooting phase"
+      },
+      "cost": {
+        "cp": 0,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Challenger – Strategic Ploy Stratagem",
+        "legend": "The soundest military minds find no shame in signalling a retreat. Strength preserved may prove pivotal at a later juncture."
+      }
+    },
+    {
+      "title": "ALL IN",
+      "color": "#8B4513",
+      "body": {
+        "when": "Your Fight phase.",
+        "target": "One unit from your army that has not been selected to fight ...",
+        "effect": "Until the end of the phase, each time a model in your unit makes a Pile-in or Consolidation move, it...",
+        "restriction": "Your turn • Fight phase"
+      },
+      "cost": {
+        "cp": 0,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Challenger – Strategic Ploy Stratagem",
+        "legend": "The time has come to commit your forces. Order your soldiers forward, pursue the foe and cut them down without mercy. Victory or death!"
+      }
+    },
+    {
+      "title": "PIVOTAL MOMENT",
+      "color": "#8B4513",
+      "body": {
+        "when": "Your Movement phase.",
+        "target": "One unit from your army.",
+        "effect": "Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it...",
+        "restriction": "Your turn • Movement phase"
+      },
+      "cost": {
+        "cp": 0,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Challenger – Strategic Ploy Stratagem",
+        "legend": "The outcome of the battle hangs in the balance. This is the time to strike hard and without mercy."
+      }
+    },
+    {
+      "title": "HARBOURED POWER",
+      "color": "#8B4513",
+      "body": {
+        "when": "Your Shooting phase or your Fight phase.",
+        "target": "One unit from your army that has not been selected to shoot ...",
+        "effect": "Until the end of the phase, weapons equipped by models in your unit have the [HAZARDOUS] ability and...",
+        "restriction": "Your turn • Shooting or Fight phase"
+      },
+      "cost": {
+        "cp": 0,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Challenger – Wargear Stratagem",
+        "legend": "Overcharged power packs, experimental ammunition, potent combat stimms or sorcerous might: these assets may be expended in the pursuit of victory."
+      }
+    },
+    {
+      "title": "GO TO GROUND",
+      "color": "#8B4513",
+      "body": {
+        "when": "Your opponent’s Shooting phase, just after an enemy unit has selected its target...",
+        "target": "One INFANTRY unit from your army that was selected as the ta...",
+        "effect": "Until the end of the phase, all models in your unit have a 6+ invulnerable save and have the Benefit...",
+        "restriction": "Opponent’s turn • Shooting phase"
+      },
+      "cost": {
+        "cp": 1,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Core – Battle Tactic Stratagem",
+        "legend": "Seeking salvation from incoming fire, warriors hurl themselves into whatever cover they can find."
+      }
+    },
+    {
+      "title": "COMMAND RE-ROLL",
+      "color": "#8B4513",
+      "body": {
+        "when": "Any phase, just after you make an Advance roll, a Charge roll, a Desperate Escap...",
+        "target": "That unit or model from your army.",
+        "effect": "You re-roll that roll, test or saving throw. If you are using fast dice rolling, select one of those...",
+        "restriction": "Either player’s turn • Any phase"
+      },
+      "cost": {
+        "cp": 1,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Core – Battle Tactic Stratagem",
+        "legend": "A great commander can bend even the vagaries of fate and fortune to their will, the better to ensure victory."
+      }
+    },
+    {
+      "title": "EPIC CHALLENGE",
+      "color": "#8B4513",
+      "body": {
+        "when": "Fight phase, when a CHARACTER unit from your army that is within Engagement Rang...",
+        "target": "One CHARACTER model in your unit.",
+        "effect": "Until the end of the phase, all melee attacks made by that model have the [PRECISION] ability.",
+        "restriction": "Either player’s turn • Fight phase"
+      },
+      "cost": {
+        "cp": 1,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Core – Epic Deed Stratagem",
+        "legend": "The legends of the 41st Millennium are replete with deadly duels between mighty champions."
+      }
+    },
+    {
+      "title": "INSANE BRAVERY",
+      "color": "#8B4513",
+      "body": {
+        "when": "Battle-shock step of your Command phase, just before you take a Battle-shock tes...",
+        "target": "That unit from your army.",
+        "effect": "Your unit automatically passes that Battle-shock test.RESTRICTIONS: You cannot use this Stratagem mo...",
+        "restriction": "Your turn • Command phase"
+      },
+      "cost": {
+        "cp": 1,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Core – Epic Deed Stratagem",
+        "legend": "Indifferent to their own survival, these warriors hold their ground against seemingly impossible odds."
+      }
+    },
+    {
+      "title": "HEROIC INTERVENTION",
+      "color": "#8B4513",
+      "body": {
+        "when": "Your opponent’s Charge phase, just after an enemy unit ends a Charge move.",
+        "target": "One unit from your army that is within 6\" of that enemy unit...",
+        "effect": "Your unit now declares a charge that targets only that enemy unit, and you resolve that charge as if...",
+        "restriction": "Opponent’s turn • Charge phase"
+      },
+      "cost": {
+        "cp": 1,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Core – Strategic Ploy Stratagem",
+        "legend": "Voices raised in furious war cries, your warriors surge forth to meet the enemy’s onslaught head-on."
+      }
+    },
+    {
+      "title": "COUNTER-OFFENSIVE",
+      "color": "#8B4513",
+      "body": {
+        "when": "Fight phase, just after an enemy unit has fought.",
+        "target": "One unit from your army that is within Engagement Range of o...",
+        "effect": "Your unit fights next.",
+        "restriction": "Either player’s turn • Fight phase"
+      },
+      "cost": {
+        "cp": 2,
+        "colorless": 0
+      },
+      "metadata": {
+        "type": "Core – Strategic Ploy Stratagem",
+        "legend": "In close-quarters combat, the slightest hesitation can leave an opening for a swift foe to exploit."
+      }
+    }
+  ]
+}

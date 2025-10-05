@@ -208,3 +208,4 @@ __marimo__/
 
 # Generated PDF files
 *.pdf
+image_cache/
