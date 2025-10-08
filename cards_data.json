@@ -1,60 +1,242 @@
 {
   "cards": [
     {
-      "title": "Lightning Bolt",
-      "color": "#d32f2f",
-      "body": {
-        "when": "As an instant",
-        "target": "Choose any target",
-        "effect": "Deal 3 damage",
-        "restriction": "None"
-      },
-      "cost": {
-        "red": 1,
-        "colorless": 0
-      }
-    },
-    {
-      "title": "Healing Potion",
-      "color": "#fdd835",
-      "body": {
-        "when": "During your main phase",
-        "target": "Choose one creature or yourself",
-        "effect": "Restore 5 health to the chosen target",
-        "restriction": "Can only be used once per turn"
-      },
-      "cost": {
-        "white": 1,
-        "colorless": 1
-      }
-    },
-    {
-      "title": "Forest Guardian",
+      "title": "GO TO GROUND",
       "color": "#388e3c",
       "body": {
-        "when": "When summoned",
-        "target": "All your creatures",
-        "effect": "Give +1/+1",
-        "restriction": "Must control a forest"
+        "when": "Your opponent’s Shooting phase, just after an enemy unit has selected its targets.",
+        "target": "One INFANTRY unit from your army that was selected as the target of one or more of the attacking unit’s attacks.",
+        "effect": "Until the end of the phase, all models in your unit have a 6+ invulnerable save and have the Benefit of Cover.",
+        "restriction": ""
       },
       "cost": {
-        "green": 2,
-        "colorless": 2
-      }
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      "type": "Core – Battle Tactic Stratagem",
+      "legend": "Seeking salvation from incoming fire, warriors hurl themselves into whatever cover they can find."
     },
     {
-      "title": "Mind Control",
+      "title": "COMMAND RE-ROLL",
       "color": "#1976d2",
       "body": {
-        "when": "During your main phase",
-        "target": "Choose one enemy creature",
-        "effect": "Take control of target creature until end of turn",
-        "restriction": "Target creature must have power 3 or less"
+        "when": "Any phase, just after you make an Advance roll, a Charge roll, a Desperate Escape test or a Hazardous test for a unit from your army, or a Hit roll, a Wound roll, a Damage roll or a saving throw for a model in that unit, or a roll to determine the number of attacks made with a weapon equipped by a model in that unit. If you are using fast dice rolling, this Stratagem can still be used after rolling multiple rolls or saving throws at once.",
+        "target": "That unit or model from your army.",
+        "effect": "You re-roll that roll, test or saving throw. If you are using fast dice rolling, select one of those rolls or saving throws to re-roll.",
+        "restriction": ""
       },
       "cost": {
-        "blue": 3,
-        "colorless": 1
-      }
+        "cp": 1,
+        "turn": "Either player’s turn",
+        "phase": "Any phase"
+      },
+      "type": "Core – Battle Tactic Stratagem",
+      "legend": "A great commander can bend even the vagaries of fate and fortune to their will, the better to ensure victory."
+    },
+    {
+      "title": "EPIC CHALLENGE",
+      "color": "#d32f2f",
+      "body": {
+        "when": "Fight phase, when a CHARACTER unit from your army that is within Engagement Range of one or more Attached units is selected to fight.",
+        "target": "One CHARACTER model in your unit.",
+        "effect": "Until the end of the phase, all melee attacks made by that model have the [PRECISION] ability.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      "type": "Core – Epic Deed Stratagem",
+      "legend": "The legends of the 41st Millennium are replete with deadly duels between mighty champions."
+    },
+    {
+      "title": "INSANE BRAVERY",
+      "color": "#388e3c",
+      "body": {
+        "when": "Battle-shock step of your Command phase, just before you take a Battle-shock test for a unit from your army.",
+        "target": "That unit from your army.",
+        "effect": "Your unit automatically passes that Battle-shock test.",
+        "restriction": "You cannot use this Stratagem more than once per battle."
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      "type": "Core – Epic Deed Stratagem",
+      "legend": "Indifferent to their own survival, these warriors hold their ground against seemingly impossible odds."
+    },
+    {
+      "title": "HEROIC INTERVENTION",
+      "color": "#388e3c",
+      "body": {
+        "when": "Your opponent’s Charge phase, just after an enemy unit ends a Charge move.",
+        "target": "One unit from your army that is within 6\" of that enemy unit and would be eligible to declare a charge against that enemy unit if it were your Charge phase.",
+        "effect": "Your unit now declares a charge that targets only that enemy unit, and you resolve that charge as if it were your Charge phase.",
+        "restriction": "You can only select a VEHICLE unit from your army if it is a WALKER. Note that even if this charge is successful, your unit does not receive any Charge bonus this turn."
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Charge phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "Voices raised in furious war cries, your warriors surge forth to meet the enemy’s onslaught head-on."
+    },
+    {
+      "title": "COUNTER-OFFENSIVE",
+      "color": "#d32f2f",
+      "body": {
+        "when": "Fight phase, just after an enemy unit has fought.",
+        "target": "One unit from your army that is within Engagement Range of one or more enemy units and that has not already been selected to fight this phase.",
+        "effect": "Your unit fights next.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 2,
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "In close-quarters combat, the slightest hesitation can leave an opening for a swift foe to exploit."
+    },
+    {
+      "title": "TANK SHOCK",
+      "color": "#d32f2f",
+      "body": {
+        "when": "Your Charge phase, just after a VEHICLE unit from your army ends a Charge move.",
+        "target": "That VEHICLE unit.",
+        "effect": "Select one enemy unit within Engagement Range of your unit, and select one VEHICLE model in your unit that is within Engagement Range of that enemy unit. Roll a number of D6 equal to the Toughness characteristic of the selected VEHICLE model. For each 5+, that enemy unit suffers 1 mortal wound (to a maximum of 6 mortal wounds).",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Your turn",
+        "phase": "Charge phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "Ramming the foe with a speeding vehicle may be an unsubtle tactic, but it is a murderously effective one."
+    },
+    {
+      "title": "RAPID INGRESS",
+      "color": "#388e3c",
+      "body": {
+        "when": "End of your opponent’s Movement phase.",
+        "target": "One unit from your army that is in Reserves.",
+        "effect": "Your unit can arrive on the battlefield as if it were the Reinforcements step of your Movement phase, and if every model in that unit has the Deep Strike ability, you can set that unit up as described in the Deep Strike ability (even though it is not your Movement phase).",
+        "restriction": "You cannot use this Stratagem to enable a unit to arrive on the battlefield during a battle round it would not normally be able to do so in."
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "Be it cunning strategy, potent technology or supernatural ritual, there are many means by which a commander may hasten their warriors’ onset."
+    },
+    {
+      "title": "FIRE OVERWATCH",
+      "color": "#388e3c",
+      "body": {
+        "when": "Your opponent’s Movement or Charge phase, just after an enemy unit is set up or when an enemy unit starts or ends a Normal, Advance or Fall Back move, or declares a charge.",
+        "target": "One unit from your army that is within 24\" of that enemy unit and that would be eligible to shoot if it were your Shooting phase.",
+        "effect": "If that enemy unit is visible to your unit, your unit can shoot that enemy unit as if it were your Shooting phase.",
+        "restriction": "You cannot target a TITANIC unit with this Stratagem. Until the end of the phase, each time a model in your unit makes a ranged attack, an unmodified Hit roll of 6 is required to score a hit, irrespective of the attacking weapon’s Ballistic Skill or any modifiers. You can only use this Stratagem once per turn."
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Movement or Charge phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "A hail of wildfire can drive back advancing foes."
+    },
+    {
+      "title": "SMOKESCREEN",
+      "color": "#388e3c",
+      "body": {
+        "when": "Your opponent’s Shooting phase, just after an enemy unit has selected its targets.",
+        "target": "One SMOKE unit from your army that was selected as the target of one or more of the attacking unit’s attacks.",
+        "effect": "Until the end of the phase, all models in your unit have the Benefit of Cover and the Stealth ability.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      "type": "Core – Wargear Stratagem",
+      "legend": "Even the most skilled marksmen struggle to hit targets veiled by billowing screens of smoke."
+    },
+    {
+      "title": "GRENADE",
+      "color": "#d32f2f",
+      "body": {
+        "when": "Your Shooting phase.",
+        "target": "One GRENADES unit from your army (excluding units that Advanced, Fell Back or have shot this turn) that is not within Engagement Range of one or more enemy units.",
+        "effect": "Select one GRENADES model in your unit and one enemy unit that is not within Engagement Range of any units from your army and is within 8\" of and visible to your GRENADES model. Roll six D6: for each 4+, that enemy unit suffers 1 mortal wound.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      "type": "Core – Wargear Stratagem",
+      "legend": "Priming their hand-held projectiles, these warriors draw back and hurl death into the enemy’s midst."
+    },
+    {
+      "title": "NEW ORDERS",
+      "color": "#1976d2",
+      "body": {
+        "when": "End of your Command phase.",
+        "target": "One of your active Secondary Mission cards.",
+        "effect": "Discard it and draw one new Secondary Mission card.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      "type": "Core Stratagem – Strategic Ploy Stratagem",
+      "legend": "High command has received new intelligence."
+    },
+    {
+      "title": "NEW ORDERS",
+      "color": "#1976d2",
+      "body": {
+        "when": "End of your Command phase.",
+        "target": "One of your active Secondary Mission cards.",
+        "effect": "Discard it and draw one new Secondary Mission card.",
+        "restriction": "You can only use this Stratagem once per battle."
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      "type": "Core Stratagem – Strategic Ploy Stratagem",
+      "legend": "High command has received new intelligence."
+    },
+    {
+      "title": "NEW ORDERS",
+      "color": "#1976d2",
+      "body": {
+        "when": "End of your Command phase.",
+        "target": "One of your active Secondary Mission cards.",
+        "effect": "Discard it and draw one new Secondary Mission card.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      "type": "Core Stratagem – Strategic Ploy Stratagem",
+      "legend": "High command has received new intelligence."
     }
   ]
 }
