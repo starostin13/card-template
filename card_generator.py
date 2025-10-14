@@ -166,21 +166,6 @@ class CardGenerator:
         title = card_data.get('title', 'Card Title')
         c.drawCentredString(x + card_w / 2, y + card_h - 0.3 * inch, title)
         
-        # Draw mana cost in top right corner
-        cost_data = card_data.get('cost', {})
-        if cost_data:
-            cost_x = x + card_w - 0.3 * inch
-            cost_y = y + card_h - 0.25 * inch
-            total_cost = sum(cost_data.values())
-            
-            # Draw total cost circle (no color)
-            c.setFillColor(white)
-            c.setStrokeColor(black)
-            c.circle(cost_x, cost_y, 0.12 * inch, stroke=1, fill=1)
-            c.setFillColor(black)
-            c.setFont("Helvetica-Bold", 8)
-            c.drawCentredString(cost_x, cost_y - 0.03 * inch, str(total_cost))
-        
         # Draw card body
         body = card_data.get('body', {})
         if body:
@@ -223,65 +208,109 @@ class CardGenerator:
             # When
             when = body.get('when', '')
             if when:
-                c.setFont("Helvetica-Bold", 8)
-                c.setFillColor(HexColor(card_color))  # Use card color for keyword
-                c.drawString(x + 0.1 * inch, text_y, "When:")
-                c.setFont("Helvetica", 8)
-                c.setFillColor(self.text_color)  # Normal color for text
-                c.drawString(x + 0.5 * inch, text_y, when[:35])
-                text_y -= 0.15 * inch
+                # Draw "When: " in color, then text in normal color on same line
+                when_text = f"When: {when}"
+                when_lines = self._wrap_text(when_text, 22)  # Reduced from 30
+                for i, line in enumerate(when_lines[:3]):  # Max 3 lines
+                    if i == 0:
+                        # First line: draw "When:" in color
+                        c.setFont("Helvetica-Bold", 12)
+                        c.setFillColor(HexColor(card_color))
+                        c.drawString(x + 0.1 * inch, text_y, "When:")
+                        c.setFont("Helvetica", 12)
+                        c.setFillColor(self.text_color)
+                        remaining_text = line[5:]  # Remove "When:"
+                        c.drawString(x + 0.55 * inch, text_y, remaining_text)
+                    else:
+                        # Continuation lines: normal text only
+                        c.setFont("Helvetica", 12)
+                        c.setFillColor(self.text_color)
+                        c.drawString(x + 0.1 * inch, text_y, line)
+                    text_y -= 0.18 * inch
+                text_y -= 0.05 * inch
             
             # Target
             target = body.get('target', '')
             if target:
-                c.setFont("Helvetica-Bold", 8)
-                c.setFillColor(HexColor(card_color))  # Use card color for keyword
-                c.drawString(x + 0.1 * inch, text_y, "Target:")
-                c.setFont("Helvetica", 8)
-                c.setFillColor(self.text_color)  # Normal color for text
-                c.drawString(x + 0.5 * inch, text_y, target[:32])
-                text_y -= 0.15 * inch
+                target_text = f"Target: {target}"
+                target_lines = self._wrap_text(target_text, 22)  # Reduced from 30
+                for i, line in enumerate(target_lines[:3]):  # Max 3 lines
+                    if i == 0:
+                        c.setFont("Helvetica-Bold", 12)
+                        c.setFillColor(HexColor(card_color))
+                        c.drawString(x + 0.1 * inch, text_y, "Target:")
+                        c.setFont("Helvetica", 12)
+                        c.setFillColor(self.text_color)
+                        remaining_text = line[7:]  # Remove "Target:"
+                        c.drawString(x + 0.65 * inch, text_y, remaining_text)
+                    else:
+                        c.setFont("Helvetica", 12)
+                        c.setFillColor(self.text_color)
+                        c.drawString(x + 0.1 * inch, text_y, line)
+                    text_y -= 0.18 * inch
+                text_y -= 0.05 * inch
             
             # Effect
             effect = body.get('effect', '')
             if effect:
-                c.setFont("Helvetica-Bold", 8)
-                c.setFillColor(HexColor(card_color))  # Use card color for keyword
-                c.drawString(x + 0.1 * inch, text_y, "Effect:")
-                c.setFont("Helvetica", 8)
-                c.setFillColor(self.text_color)  # Normal color for text
-                # Handle long effect text
-                effect_lines = self._wrap_text(effect, 32)
-                for line in effect_lines[:2]:  # Max 2 lines
-                    c.drawString(x + 0.5 * inch, text_y, line)
-                    text_y -= 0.12 * inch
-                text_y -= 0.03 * inch
+                effect_text = f"Effect: {effect}"
+                effect_lines = self._wrap_text(effect_text, 22)  # Reduced from 30
+                for i, line in enumerate(effect_lines[:4]):  # Max 4 lines
+                    if i == 0:
+                        c.setFont("Helvetica-Bold", 12)
+                        c.setFillColor(HexColor(card_color))
+                        c.drawString(x + 0.1 * inch, text_y, "Effect:")
+                        c.setFont("Helvetica", 12)
+                        c.setFillColor(self.text_color)
+                        remaining_text = line[7:]  # Remove "Effect:"
+                        c.drawString(x + 0.65 * inch, text_y, remaining_text)
+                    else:
+                        c.setFont("Helvetica", 12)
+                        c.setFillColor(self.text_color)
+                        c.drawString(x + 0.1 * inch, text_y, line)
+                    text_y -= 0.18 * inch
+                text_y -= 0.05 * inch
             
             # Restriction
             restriction = body.get('restriction', '')
             if restriction and restriction.lower() != 'none':
-                c.setFont("Helvetica-Bold", 7)
-                c.setFillColor(HexColor(card_color))  # Use card color for "Restriction:" keyword
-                c.drawString(x + 0.1 * inch, text_y, "Restriction:")
-                c.setFont("Helvetica-Oblique", 7)
-                c.setFillColor(self.subtitle_color)  # Keep subtitle color for restriction text
-                restriction_lines = self._wrap_text(restriction, 35)
-                for line in restriction_lines[:2]:  # Max 2 lines
-                    c.drawString(x + 0.7 * inch, text_y, line)
-                    text_y -= 0.1 * inch
+                restriction_text = f"Restriction: {restriction}"
+                restriction_lines = self._wrap_text(restriction_text, 20)  # Reduced
+                for i, line in enumerate(restriction_lines[:3]):  # Max 3 lines
+                    if i == 0:
+                        c.setFont("Helvetica-Bold", 12)
+                        c.setFillColor(HexColor(card_color))
+                        c.drawString(x + 0.1 * inch, text_y, "Restriction:")
+                        c.setFont("Helvetica-Oblique", 12)
+                        c.setFillColor(self.subtitle_color)
+                        remaining_text = line[12:]  # Remove "Restriction:"
+                        c.drawString(x + 0.95 * inch, text_y, remaining_text)
+                    else:
+                        c.setFont("Helvetica-Oblique", 12)
+                        c.setFillColor(self.subtitle_color)
+                        c.drawString(x + 0.1 * inch, text_y, line)
+                    text_y -= 0.18 * inch
         
-        # Draw mana cost breakdown at bottom (no colors)
+        # Draw CP cost in bottom right corner
+        cost_data = card_data.get('cost', {})
         if cost_data:
-            cost_y = y + 0.15 * inch
-            cost_x = x + 0.1 * inch
-            c.setFont("Helvetica", 7)
-            c.setFillColor(self.text_color)  # Use standard text color
-            cost_text = []
-            for mana_type, amount in cost_data.items():
-                if amount > 0:
-                    cost_text.append(f"{mana_type.title()}: {amount}")
-            if cost_text:
-                c.drawString(cost_x, cost_y, " | ".join(cost_text))
+            cost_x = x + card_w - 0.25 * inch
+            cost_y = y + 0.25 * inch
+            # Get CP cost (handle both old and new format)
+            if 'cp' in cost_data:
+                total_cost = cost_data.get('cp', 0)
+            else:
+                # Old format - sum numeric values only
+                total_cost = sum(v for v in cost_data.values() 
+                               if isinstance(v, (int, float)))
+            
+            # Draw total cost circle with card color (bigger size)
+            c.setFillColor(HexColor(card_color))
+            c.setStrokeColor(HexColor(card_color))
+            c.circle(cost_x, cost_y, 0.18 * inch, stroke=1, fill=1)
+            c.setFillColor(white)
+            c.setFont("Helvetica-Bold", 14)
+            c.drawCentredString(cost_x, cost_y - 0.04 * inch, str(total_cost))
         
         if rotated:
             c.restoreState()
