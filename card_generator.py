@@ -14,10 +14,73 @@ from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
 from reportlab.lib.colors import HexColor, black, white
 from reportlab.lib.utils import ImageReader
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase.cidfonts import UnicodeCIDFont
 import os
 from image_search import ImageSearcher
 from PIL import Image, ImageDraw, ImageFilter
 import io
+import sys
+
+# Register Unicode fonts for Cyrillic support
+FONT_LOADED = False
+try:
+    # Try to load Arial fonts (Windows)
+    arial_regular = 'C:/Windows/Fonts/arial.ttf'
+    arial_bold = 'C:/Windows/Fonts/arialbd.ttf'
+    arial_italic = 'C:/Windows/Fonts/ariali.ttf'
+    
+    fonts_loaded = []
+    
+    # Try regular
+    if os.path.exists(arial_regular):
+        try:
+            pdfmetrics.registerFont(TTFont('ArialUnicode', arial_regular))
+            FONT_REGULAR = 'ArialUnicode'
+            fonts_loaded.append('Arial Regular')
+        except Exception as e:
+            print(f"× Failed to load Arial Regular: {e}")
+            FONT_REGULAR = 'Helvetica'
+    else:
+        FONT_REGULAR = 'Helvetica'
+    
+    # Try bold
+    if os.path.exists(arial_bold):
+        try:
+            pdfmetrics.registerFont(TTFont('ArialUnicode-Bold', arial_bold))
+            FONT_BOLD = 'ArialUnicode-Bold'
+            fonts_loaded.append('Arial Bold')
+        except Exception as e:
+            print(f"× Failed to load Arial Bold: {e}")
+            FONT_BOLD = FONT_REGULAR
+    else:
+        FONT_BOLD = FONT_REGULAR
+    
+    # Try italic
+    if os.path.exists(arial_italic):
+        try:
+            pdfmetrics.registerFont(TTFont('ArialUnicode-Italic', arial_italic))
+            FONT_ITALIC = 'ArialUnicode-Italic'
+            fonts_loaded.append('Arial Italic')
+        except Exception as e:
+            print(f"× Failed to load Arial Italic: {e}")
+            FONT_ITALIC = FONT_REGULAR
+    else:
+        FONT_ITALIC = FONT_REGULAR
+    
+    if fonts_loaded:
+        FONT_LOADED = True
+        print(f"✓ Loaded fonts: {', '.join(fonts_loaded)}")
+    else:
+        raise Exception("No suitable font found")
+        
+except Exception as e:
+    print(f"⚠ Font loading failed: {e}")
+    print("⚠ Using fallback Helvetica (no Cyrillic support)")
+    FONT_REGULAR = 'Helvetica'
+    FONT_BOLD = 'Helvetica-Bold'
+    FONT_ITALIC = 'Helvetica-Oblique'
 
 
 class CardGenerator:
@@ -162,7 +225,7 @@ class CardGenerator:
         
         # Draw title
         c.setFillColor(white)
-        c.setFont("Helvetica-Bold", 12)
+        c.setFont(FONT_BOLD, 12)
         title = card_data.get('title', 'Card Title')
         c.drawCentredString(x + card_w / 2, y + card_h - 0.3 * inch, title)
         
@@ -214,16 +277,16 @@ class CardGenerator:
                 for i, line in enumerate(when_lines[:3]):  # Max 3 lines
                     if i == 0:
                         # First line: draw "When:" in color
-                        c.setFont("Helvetica-Bold", 12)
+                        c.setFont(FONT_BOLD, 12)
                         c.setFillColor(HexColor(card_color))
                         c.drawString(x + 0.1 * inch, text_y, "When:")
-                        c.setFont("Helvetica", 12)
+                        c.setFont(FONT_REGULAR, 12)
                         c.setFillColor(self.text_color)
                         remaining_text = line[5:]  # Remove "When:"
                         c.drawString(x + 0.55 * inch, text_y, remaining_text)
                     else:
                         # Continuation lines: normal text only
-                        c.setFont("Helvetica", 12)
+                        c.setFont(FONT_REGULAR, 12)
                         c.setFillColor(self.text_color)
                         c.drawString(x + 0.1 * inch, text_y, line)
                     text_y -= 0.18 * inch
@@ -236,15 +299,15 @@ class CardGenerator:
                 target_lines = self._wrap_text(target_text, 22)  # Reduced from 30
                 for i, line in enumerate(target_lines[:3]):  # Max 3 lines
                     if i == 0:
-                        c.setFont("Helvetica-Bold", 12)
+                        c.setFont(FONT_BOLD, 12)
                         c.setFillColor(HexColor(card_color))
                         c.drawString(x + 0.1 * inch, text_y, "Target:")
-                        c.setFont("Helvetica", 12)
+                        c.setFont(FONT_REGULAR, 12)
                         c.setFillColor(self.text_color)
                         remaining_text = line[7:]  # Remove "Target:"
                         c.drawString(x + 0.65 * inch, text_y, remaining_text)
                     else:
-                        c.setFont("Helvetica", 12)
+                        c.setFont(FONT_REGULAR, 12)
                         c.setFillColor(self.text_color)
                         c.drawString(x + 0.1 * inch, text_y, line)
                     text_y -= 0.18 * inch
@@ -257,15 +320,15 @@ class CardGenerator:
                 effect_lines = self._wrap_text(effect_text, 22)  # Reduced from 30
                 for i, line in enumerate(effect_lines[:4]):  # Max 4 lines
                     if i == 0:
-                        c.setFont("Helvetica-Bold", 12)
+                        c.setFont(FONT_BOLD, 12)
                         c.setFillColor(HexColor(card_color))
                         c.drawString(x + 0.1 * inch, text_y, "Effect:")
-                        c.setFont("Helvetica", 12)
+                        c.setFont(FONT_REGULAR, 12)
                         c.setFillColor(self.text_color)
                         remaining_text = line[7:]  # Remove "Effect:"
                         c.drawString(x + 0.65 * inch, text_y, remaining_text)
                     else:
-                        c.setFont("Helvetica", 12)
+                        c.setFont(FONT_REGULAR, 12)
                         c.setFillColor(self.text_color)
                         c.drawString(x + 0.1 * inch, text_y, line)
                     text_y -= 0.18 * inch
@@ -278,15 +341,15 @@ class CardGenerator:
                 restriction_lines = self._wrap_text(restriction_text, 20)  # Reduced
                 for i, line in enumerate(restriction_lines[:3]):  # Max 3 lines
                     if i == 0:
-                        c.setFont("Helvetica-Bold", 12)
+                        c.setFont(FONT_BOLD, 12)
                         c.setFillColor(HexColor(card_color))
                         c.drawString(x + 0.1 * inch, text_y, "Restriction:")
-                        c.setFont("Helvetica-Oblique", 12)
+                        c.setFont(FONT_ITALIC, 12)
                         c.setFillColor(self.subtitle_color)
                         remaining_text = line[12:]  # Remove "Restriction:"
                         c.drawString(x + 0.95 * inch, text_y, remaining_text)
                     else:
-                        c.setFont("Helvetica-Oblique", 12)
+                        c.setFont(FONT_ITALIC, 12)
                         c.setFillColor(self.subtitle_color)
                         c.drawString(x + 0.1 * inch, text_y, line)
                     text_y -= 0.18 * inch
@@ -309,7 +372,7 @@ class CardGenerator:
             c.setStrokeColor(HexColor(card_color))
             c.circle(cost_x, cost_y, 0.18 * inch, stroke=1, fill=1)
             c.setFillColor(white)
-            c.setFont("Helvetica-Bold", 14)
+            c.setFont(FONT_BOLD, 14)
             c.drawCentredString(cost_x, cost_y - 0.04 * inch, str(total_cost))
         
         if rotated:

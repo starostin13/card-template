@@ -123,6 +123,34 @@ Each card features:
 - Python 3.6+
 - reportlab 4.0.0+
 
+## Translation Rules
+
+When translating Warhammer 40K cards, please follow the guidelines in `TRANSLATION_RULES.md`:
+
+### Quick Reference - DO NOT TRANSLATE:
+- ❌ Game phase names (Command phase, Shooting phase, etc.)
+- ❌ Game step names (Battle-shock step, Deep Strike, etc.)
+- ❌ Words written in ALL CAPS (INFANTRY, VEHICLE, CHARACTER, etc.)
+- ❌ Special terms: юнит (unit), модель (model), ТРАНСПОРТ (VEHICLE), ПЕРСОНАЖ (CHARACTER)
+
+### Validation
+
+Check your translations against the rules:
+
+```bash
+python validate_translations.py
+```
+
+This will verify that:
+- Card titles remain in English
+- Game phases are not translated
+- UPPERCASE terms are preserved
+- Special gaming terms follow the convention
+
+For detailed rules and examples, see:
+- 📖 `TRANSLATION_RULES.md` - Complete translation guidelines
+- 📋 `translation_rules.json` - Structured rules for automated processing
+
 ## License
 
 MIT License

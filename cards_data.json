@@ -18,6 +18,40 @@
       "legend": "Seeking salvation from incoming fire, warriors hurl themselves into whatever cover they can find."
     },
     {
+      "title": "GO TO GROUND",
+      "color": "#388e3c",
+      "body": {
+        "when": "Your opponent’s Shooting phase, just after an enemy unit has selected its targets.",
+        "target": "One INFANTRY unit from your army that was selected as the target of one or more of the attacking unit’s attacks.",
+        "effect": "Until the end of the phase, all models in your unit have a 6+ invulnerable save and have the Benefit of Cover.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      "type": "Core – Battle Tactic Stratagem",
+      "legend": "Seeking salvation from incoming fire, warriors hurl themselves into whatever cover they can find."
+    },
+    {
+      "title": "COMMAND RE-ROLL",
+      "color": "#1976d2",
+      "body": {
+        "when": "Any phase, just after you make an Advance roll, a Charge roll, a Desperate Escape test or a Hazardous test for a unit from your army, or a Hit roll, a Wound roll, a Damage roll or a saving throw for a model in that unit, or a roll to determine the number of attacks made with a weapon equipped by a model in that unit. If you are using fast dice rolling, this Stratagem can still be used after rolling multiple rolls or saving throws at once.",
+        "target": "That unit or model from your army.",
+        "effect": "You re-roll that roll, test or saving throw. If you are using fast dice rolling, select one of those rolls or saving throws to re-roll.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Either player’s turn",
+        "phase": "Any phase"
+      },
+      "type": "Core – Battle Tactic Stratagem",
+      "legend": "A great commander can bend even the vagaries of fate and fortune to their will, the better to ensure victory."
+    },
+    {
       "title": "COMMAND RE-ROLL",
       "color": "#1976d2",
       "body": {
@@ -52,6 +86,23 @@
       "legend": "The legends of the 41st Millennium are replete with deadly duels between mighty champions."
     },
     {
+      "title": "EPIC CHALLENGE",
+      "color": "#d32f2f",
+      "body": {
+        "when": "Fight phase, when a CHARACTER unit from your army that is within Engagement Range of one or more Attached units is selected to fight.",
+        "target": "One CHARACTER model in your unit.",
+        "effect": "Until the end of the phase, all melee attacks made by that model have the [PRECISION] ability.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      "type": "Core – Epic Deed Stratagem",
+      "legend": "The legends of the 41st Millennium are replete with deadly duels between mighty champions."
+    },
+    {
       "title": "INSANE BRAVERY",
       "color": "#388e3c",
       "body": {
@@ -67,6 +118,40 @@
       },
       "type": "Core – Epic Deed Stratagem",
       "legend": "Indifferent to their own survival, these warriors hold their ground against seemingly impossible odds."
+    },
+    {
+      "title": "INSANE BRAVERY",
+      "color": "#388e3c",
+      "body": {
+        "when": "Battle-shock step of your Command phase, just before you take a Battle-shock test for a unit from your army.",
+        "target": "That unit from your army.",
+        "effect": "Your unit automatically passes that Battle-shock test.",
+        "restriction": "You cannot use this Stratagem more than once per battle."
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      "type": "Core – Epic Deed Stratagem",
+      "legend": "Indifferent to their own survival, these warriors hold their ground against seemingly impossible odds."
+    },
+    {
+      "title": "HEROIC INTERVENTION",
+      "color": "#388e3c",
+      "body": {
+        "when": "Your opponent’s Charge phase, just after an enemy unit ends a Charge move.",
+        "target": "One unit from your army that is within 6\" of that enemy unit and would be eligible to declare a charge against that enemy unit if it were your Charge phase.",
+        "effect": "Your unit now declares a charge that targets only that enemy unit, and you resolve that charge as if it were your Charge phase.",
+        "restriction": "You can only select a VEHICLE unit from your army if it is a WALKER. Note that even if this charge is successful, your unit does not receive any Charge bonus this turn."
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Charge phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "Voices raised in furious war cries, your warriors surge forth to meet the enemy’s onslaught head-on."
     },
     {
       "title": "HEROIC INTERVENTION",
@@ -120,6 +205,23 @@
       "legend": "Ramming the foe with a speeding vehicle may be an unsubtle tactic, but it is a murderously effective one."
     },
     {
+      "title": "TANK SHOCK",
+      "color": "#d32f2f",
+      "body": {
+        "when": "Your Charge phase, just after a VEHICLE unit from your army ends a Charge move.",
+        "target": "That VEHICLE unit.",
+        "effect": "Select one enemy unit within Engagement Range of your unit, and select one VEHICLE model in your unit that is within Engagement Range of that enemy unit. Roll a number of D6 equal to the Toughness characteristic of the selected VEHICLE model. For each 5+, that enemy unit suffers 1 mortal wound (to a maximum of 6 mortal wounds).",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Your turn",
+        "phase": "Charge phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "Ramming the foe with a speeding vehicle may be an unsubtle tactic, but it is a murderously effective one."
+    },
+    {
       "title": "RAPID INGRESS",
       "color": "#388e3c",
       "body": {
@@ -135,6 +237,40 @@
       },
       "type": "Core – Strategic Ploy Stratagem",
       "legend": "Be it cunning strategy, potent technology or supernatural ritual, there are many means by which a commander may hasten their warriors’ onset."
+    },
+    {
+      "title": "RAPID INGRESS",
+      "color": "#388e3c",
+      "body": {
+        "when": "End of your opponent’s Movement phase.",
+        "target": "One unit from your army that is in Reserves.",
+        "effect": "Your unit can arrive on the battlefield as if it were the Reinforcements step of your Movement phase, and if every model in that unit has the Deep Strike ability, you can set that unit up as described in the Deep Strike ability (even though it is not your Movement phase).",
+        "restriction": "You cannot use this Stratagem to enable a unit to arrive on the battlefield during a battle round it would not normally be able to do so in."
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "Be it cunning strategy, potent technology or supernatural ritual, there are many means by which a commander may hasten their warriors’ onset."
+    },
+    {
+      "title": "FIRE OVERWATCH",
+      "color": "#388e3c",
+      "body": {
+        "when": "Your opponent’s Movement or Charge phase, just after an enemy unit is set up or when an enemy unit starts or ends a Normal, Advance or Fall Back move, or declares a charge.",
+        "target": "One unit from your army that is within 24\" of that enemy unit and that would be eligible to shoot if it were your Shooting phase.",
+        "effect": "If that enemy unit is visible to your unit, your unit can shoot that enemy unit as if it were your Shooting phase.",
+        "restriction": "You cannot target a TITANIC unit with this Stratagem. Until the end of the phase, each time a model in your unit makes a ranged attack, an unmodified Hit roll of 6 is required to score a hit, irrespective of the attacking weapon’s Ballistic Skill or any modifiers. You can only use this Stratagem once per turn."
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Movement or Charge phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "A hail of wildfire can drive back advancing foes."
     },
     {
       "title": "FIRE OVERWATCH",
@@ -171,6 +307,40 @@
       "legend": "Even the most skilled marksmen struggle to hit targets veiled by billowing screens of smoke."
     },
     {
+      "title": "SMOKESCREEN",
+      "color": "#388e3c",
+      "body": {
+        "when": "Your opponent’s Shooting phase, just after an enemy unit has selected its targets.",
+        "target": "One SMOKE unit from your army that was selected as the target of one or more of the attacking unit’s attacks.",
+        "effect": "Until the end of the phase, all models in your unit have the Benefit of Cover and the Stealth ability.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      "type": "Core – Wargear Stratagem",
+      "legend": "Even the most skilled marksmen struggle to hit targets veiled by billowing screens of smoke."
+    },
+    {
+      "title": "GRENADE",
+      "color": "#d32f2f",
+      "body": {
+        "when": "Your Shooting phase.",
+        "target": "One GRENADES unit from your army (excluding units that Advanced, Fell Back or have shot this turn) that is not within Engagement Range of one or more enemy units.",
+        "effect": "Select one GRENADES model in your unit and one enemy unit that is not within Engagement Range of any units from your army and is within 8\" of and visible to your GRENADES model. Roll six D6: for each 4+, that enemy unit suffers 1 mortal wound.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      "type": "Core – Wargear Stratagem",
+      "legend": "Priming their hand-held projectiles, these warriors draw back and hurl death into the enemy’s midst."
+    },
+    {
       "title": "GRENADE",
       "color": "#d32f2f",
       "body": {
@@ -205,13 +375,370 @@
       "legend": "High command has received new intelligence."
     },
     {
+      "title": "GO TO GROUND",
+      "color": "#388e3c",
+      "body": {
+        "when": "Фаза стрельбы противника, сразу после того как вражеский юнит выбрал цели.",
+        "target": "Один INFANTRY юнит вашей армии, который был выбран целью одной или более атак атакующего юнита.",
+        "effect": "До конца фазы все модели вашего юнита получают INVURABLE SAVE 6+ и benefits of cover.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      "type": "Core – Battle Tactic Stratagem",
+      "legend": "Seeking salvation from incoming fire, warriors hurl themselves into whatever cover they can find."
+    },
+    {
+      "title": "GO TO GROUND",
+      "color": "#388e3c",
+      "body": {
+        "when": "Фаза стрельбы противника, сразу после того как вражеский юнит выбрал цели.",
+        "target": "Один INFANTRY юнит вашей армии, который был выбран целью одной или более атак атакующего юнита.",
+        "effect": "До конца фазы все модели вашего юнита получают INVURABLE SAVE 6+ и benefits of cover.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      "type": "Core – Battle Tactic Stratagem",
+      "legend": "Seeking salvation from incoming fire, warriors hurl themselves into whatever cover they can find."
+    },
+    {
+      "title": "COMMAND RE-ROLL",
+      "color": "#1976d2",
+      "body": {
+        "when": "Любая фаза, сразу после броска на advance, атаку, desperate escape test или hazardous тест для юнита вашей армии, или броска на попадание, ранение, урон или спасбросок для модели этого юнита, или броска для определения количества атак оружия модели.",
+        "target": "Этот юнит или модель вашей армии.",
+        "effect": "Вы перебрасываете этот бросок, тест или спасбросок. При быстрых бросках выберите один бросок для переброса.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Either player’s turn",
+        "phase": "Any phase"
+      },
+      "type": "Core – Battle Tactic Stratagem",
+      "legend": "A great commander can bend even the vagaries of fate and fortune to their will, the better to ensure victory."
+    },
+    {
+      "title": "COMMAND RE-ROLL",
+      "color": "#1976d2",
+      "body": {
+        "when": "Любая фаза, сразу после броска на advance, атаку, desperate escape test или hazardous тест для юнита вашей армии, или броска на попадание, ранение, урон или спасбросок для модели этого юнита, или броска для определения количества атак оружия модели.",
+        "target": "Этот юнит или модель вашей армии.",
+        "effect": "Вы перебрасываете этот бросок, тест или спасбросок. При быстрых бросках выберите один бросок для переброса.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Either player’s turn",
+        "phase": "Any phase"
+      },
+      "type": "Core – Battle Tactic Stratagem",
+      "legend": "A great commander can bend even the vagaries of fate and fortune to their will, the better to ensure victory."
+    },
+    {
+      "title": "EPIC CHALLENGE",
+      "color": "#d32f2f",
+      "body": {
+        "when": "Фаза боя, когда CHARACTER вашей армии в пределах досягаемости одного или более присоединенных юнитов выбран для боя.",
+        "target": "Одна модель CHARACTER в вашем юните.",
+        "effect": "До конца фазы все атаки ближнего боя этой модели получают способность [PRECISION].",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      "type": "Core – Epic Deed Stratagem",
+      "legend": "The legends of the 41st Millennium are replete with deadly duels between mighty champions."
+    },
+    {
+      "title": "EPIC CHALLENGE",
+      "color": "#d32f2f",
+      "body": {
+        "when": "Фаза боя, когда CHARACTER вашей армии в пределах досягаемости одного или более присоединенных юнитов выбран для боя.",
+        "target": "Одна модель CHARACTER в вашем юните.",
+        "effect": "До конца фазы все атаки ближнего боя этой модели получают способность [PRECISION].",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      "type": "Core – Epic Deed Stratagem",
+      "legend": "The legends of the 41st Millennium are replete with deadly duels between mighty champions."
+    },
+    {
+      "title": "INSANE BRAVERY",
+      "color": "#388e3c",
+      "body": {
+        "when": "Battle shock step вашей командной фазы, перед тестом на боевой шок для юнита вашей армии.",
+        "target": "Этот юнит вашей армии.",
+        "effect": "Ваш юнит автоматически проходит тест на боевой шок.",
+        "restriction": "Нельзя использовать эту стратагемму более одного раза за бой."
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      "type": "Core – Epic Deed Stratagem",
+      "legend": "Indifferent to their own survival, these warriors hold their ground against seemingly impossible odds."
+    },
+    {
+      "title": "INSANE BRAVERY",
+      "color": "#388e3c",
+      "body": {
+        "when": "Battle shock step вашей командной фазы, перед тестом на боевой шок для юнита вашей армии.",
+        "target": "Этот юнит вашей армии.",
+        "effect": "Ваш юнит автоматически проходит тест на боевой шок.",
+        "restriction": "Нельзя использовать эту стратагемму более одного раза за бой."
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Your turn",
+        "phase": "Command phase"
+      },
+      "type": "Core – Epic Deed Stratagem",
+      "legend": "Indifferent to their own survival, these warriors hold their ground against seemingly impossible odds."
+    },
+    {
+      "title": "HEROIC INTERVENTION",
+      "color": "#388e3c",
+      "body": {
+        "when": "Фаза атаки противника, сразу после того как вражеский юнит завершил движение атаки.",
+        "target": "Один юнит вашей армии в пределах 6\" от этого вражеского юнита, который мог бы объявить атаку на этот юнит, если бы это была ваша фаза атаки.",
+        "effect": "Ваш юнит объявляет атаку только на этот вражеский юнит, и вы разрешаете эту атаку, как будто это ваша фаза атаки.",
+        "restriction": "Можно выбрать ТРАНСПОРТ только если это ШАГОХОД. Даже при успешной атаке ваш юнит не получает бонусов атаки в этот ход."
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Charge phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "Voices raised in furious war cries, your warriors surge forth to meet the enemy’s onslaught head-on."
+    },
+    {
+      "title": "HEROIC INTERVENTION",
+      "color": "#388e3c",
+      "body": {
+        "when": "Фаза атаки противника, сразу после того как вражеский юнит завершил движение атаки.",
+        "target": "Один юнит вашей армии в пределах 6\" от этого вражеского юнита, который мог бы объявить атаку на этот юнит, если бы это была ваша фаза атаки.",
+        "effect": "Ваш юнит объявляет атаку только на этот вражеский юнит, и вы разрешаете эту атаку, как будто это ваша фаза атаки.",
+        "restriction": "Можно выбрать ТРАНСПОРТ только если это ШАГОХОД. Даже при успешной атаке ваш юнит не получает бонусов атаки в этот ход."
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Charge phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "Voices raised in furious war cries, your warriors surge forth to meet the enemy’s onslaught head-on."
+    },
+    {
+      "title": "COUNTER-OFFENSIVE",
+      "color": "#d32f2f",
+      "body": {
+        "when": "Fight phase, сразу после того как вражеский юнит сражался.",
+        "target": "Один юнит вашей армии в пределах досягаемости одного или более вражеских юнитов, который еще не был выбран для боя в этой фазе.",
+        "effect": "Ваш юнит сражается следующим.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 2,
+        "turn": "Either player’s turn",
+        "phase": "Fight phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "In close-quarters combat, the slightest hesitation can leave an opening for a swift foe to exploit."
+    },
+    {
+      "title": "TANK SHOCK",
+      "color": "#d32f2f",
+      "body": {
+        "when": "Ваша фаза атаки, сразу после того как юнит ТРАНСПОРТА завершил движение атаки.",
+        "target": "Этот юнит ТРАНСПОРТА.",
+        "effect": "Выберите один вражеский юнит в пределах досягаемости вашего юнита и одну модель ТРАНСПОРТА в вашем юните в пределах досягаемости этого вражеского юнита. Бросьте количество D6 равное характеристике Прочности выбранной модели ТРАНСПОРТА. За каждые 5+ вражеский юнит получает 1 смертельную рану (максимум 6).",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Your turn",
+        "phase": "Charge phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "Ramming the foe with a speeding vehicle may be an unsubtle tactic, but it is a murderously effective one."
+    },
+    {
+      "title": "TANK SHOCK",
+      "color": "#d32f2f",
+      "body": {
+        "when": "Ваша фаза атаки, сразу после того как юнит ТРАНСПОРТА завершил движение атаки.",
+        "target": "Этот юнит ТРАНСПОРТА.",
+        "effect": "Выберите один вражеский юнит в пределах досягаемости вашего юнита и одну модель ТРАНСПОРТА в вашем юните в пределах досягаемости этого вражеского юнита. Бросьте количество D6 равное характеристике Прочности выбранной модели ТРАНСПОРТА. За каждые 5+ вражеский юнит получает 1 смертельную рану (максимум 6).",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Your turn",
+        "phase": "Charge phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "Ramming the foe with a speeding vehicle may be an unsubtle tactic, but it is a murderously effective one."
+    },
+    {
+      "title": "RAPID INGRESS",
+      "color": "#388e3c",
+      "body": {
+        "when": "Конец фазы передвижения противника.",
+        "target": "Один юнит вашей армии, находящийся в резерве.",
+        "effect": "Ваш юнит может прибыть на поле боя, как если бы это был шаг подкреплений вашей фазы передвижения, и если каждая модель юнита имеет способность Глубокий удар, вы можете разместить юнит как описано в способности Глубокий удар.",
+        "restriction": "Нельзя использовать эту стратагемму, чтобы юнит прибыл на поле боя в раунд, когда он обычно не мог бы этого сделать."
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "Be it cunning strategy, potent technology or supernatural ritual, there are many means by which a commander may hasten their warriors’ onset."
+    },
+    {
+      "title": "RAPID INGRESS",
+      "color": "#388e3c",
+      "body": {
+        "when": "Конец фазы передвижения противника.",
+        "target": "Один юнит вашей армии, находящийся в резерве.",
+        "effect": "Ваш юнит может прибыть на поле боя, как если бы это был шаг подкреплений вашей фазы передвижения, и если каждая модель юнита имеет способность Глубокий удар, вы можете разместить юнит как описано в способности Глубокий удар.",
+        "restriction": "Нельзя использовать эту стратагемму, чтобы юнит прибыл на поле боя в раунд, когда он обычно не мог бы этого сделать."
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Movement phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "Be it cunning strategy, potent technology or supernatural ritual, there are many means by which a commander may hasten their warriors’ onset."
+    },
+    {
+      "title": "FIRE OVERWATCH",
+      "color": "#388e3c",
+      "body": {
+        "when": "Фаза передвижения или атаки противника, сразу после размещения вражеского юнита или когда вражеский юнит начинает или завершает обычное движение, продвижение или отступление, или объявляет атаку.",
+        "target": "Один юнит вашей армии в пределах 24\" от этого вражеского юнита, который мог бы стрелять, если бы это была ваша фаза стрельбы.",
+        "effect": "Если этот вражеский юнит виден вашему юниту, ваш юнит может стрелять по этому вражескому юниту, как если бы это была ваша фаза стрельбы.",
+        "restriction": "Нельзя целиться в ТИТАНИЧЕСКИЙ юнит этой стратагеммой. До конца фазы для попадания требуется немодифицированный бросок 6, независимо от БМ оружия. Можно использовать только раз за ход."
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Movement or Charge phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "A hail of wildfire can drive back advancing foes."
+    },
+    {
+      "title": "FIRE OVERWATCH",
+      "color": "#388e3c",
+      "body": {
+        "when": "Фаза передвижения или атаки противника, сразу после размещения вражеского юнита или когда вражеский юнит начинает или завершает обычное движение, продвижение или отступление, или объявляет атаку.",
+        "target": "Один юнит вашей армии в пределах 24\" от этого вражеского юнита, который мог бы стрелять, если бы это была ваша фаза стрельбы.",
+        "effect": "Если этот вражеский юнит виден вашему юниту, ваш юнит может стрелять по этому вражескому юниту, как если бы это была ваша фаза стрельбы.",
+        "restriction": "Нельзя целиться в ТИТАНИЧЕСКИЙ юнит этой стратагеммой. До конца фазы для попадания требуется немодифицированный бросок 6, независимо от БМ оружия. Можно использовать только раз за ход."
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Movement or Charge phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "A hail of wildfire can drive back advancing foes."
+    },
+    {
+      "title": "SMOKESCREEN",
+      "color": "#388e3c",
+      "body": {
+        "when": "Фаза стрельбы противника, сразу после того как вражеский юнит выбрал цели.",
+        "target": "Один юнит с ДЫМ вашей армии, который был выбран целью одной или более атак атакующего юнита.",
+        "effect": "До конца фазы все модели вашего юнита получают преимущества укрытия и способность Скрытность.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      "type": "Core – Wargear Stratagem",
+      "legend": "Even the most skilled marksmen struggle to hit targets veiled by billowing screens of smoke."
+    },
+    {
+      "title": "SMOKESCREEN",
+      "color": "#388e3c",
+      "body": {
+        "when": "Фаза стрельбы противника, сразу после того как вражеский юнит выбрал цели.",
+        "target": "Один юнит с ДЫМ вашей армии, который был выбран целью одной или более атак атакующего юнита.",
+        "effect": "До конца фазы все модели вашего юнита получают преимущества укрытия и способность Скрытность.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      "type": "Core – Wargear Stratagem",
+      "legend": "Even the most skilled marksmen struggle to hit targets veiled by billowing screens of smoke."
+    },
+    {
+      "title": "GRENADE",
+      "color": "#d32f2f",
+      "body": {
+        "when": "Ваша фаза стрельбы.",
+        "target": "Один юнит с ГРАНАТЫ вашей армии (исключая юниты, которые продвигались, отступали или стреляли в этот ход), который не находится в пределах досягаемости вражеских юнитов.",
+        "effect": "Выберите одну модель с ГРАНАТЫ в вашем юните и один вражеский юнит в пределах 8\" и видимый вашей модели. Бросьте шесть D6: за каждые 4+ этот вражеский юнит получает 1 смертельную рану.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      "type": "Core – Wargear Stratagem",
+      "legend": "Priming their hand-held projectiles, these warriors draw back and hurl death into the enemy’s midst."
+    },
+    {
+      "title": "GRENADE",
+      "color": "#d32f2f",
+      "body": {
+        "when": "Ваша фаза стрельбы.",
+        "target": "Один юнит с ГРАНАТЫ вашей армии (исключая юниты, которые продвигались, отступали или стреляли в этот ход), который не находится в пределах досягаемости вражеских юнитов.",
+        "effect": "Выберите одну модель с ГРАНАТЫ в вашем юните и один вражеский юнит в пределах 8\" и видимый вашей модели. Бросьте шесть D6: за каждые 4+ этот вражеский юнит получает 1 смертельную рану.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      "type": "Core – Wargear Stratagem",
+      "legend": "Priming their hand-held projectiles, these warriors draw back and hurl death into the enemy’s midst."
+    },
+    {
       "title": "NEW ORDERS",
       "color": "#1976d2",
       "body": {
-        "when": "End of your Command phase.",
-        "target": "One of your active Secondary Mission cards.",
-        "effect": "Discard it and draw one new Secondary Mission card.",
-        "restriction": "You can only use this Stratagem once per battle."
+        "when": "Конец вашей командной фазы.",
+        "target": "Одна из ваших активных карт вторичных миссий.",
+        "effect": "Сбросьте её и возьмите одну новую карту вторичной миссии.",
+        "restriction": ""
       },
       "cost": {
         "cp": 1,
@@ -222,21 +749,72 @@
       "legend": "High command has received new intelligence."
     },
     {
-      "title": "NEW ORDERS",
-      "color": "#1976d2",
+      "title": "RAPID DEPLOYMENT",
+      "color": "#388e3c",
       "body": {
-        "when": "End of your Command phase.",
-        "target": "One of your active Secondary Mission cards.",
-        "effect": "Discard it and draw one new Secondary Mission card.",
+        "when": "Your Movement phase, during your first turn.",
+        "target": "One unit from your army that is in Strategic Reserves.",
+        "effect": "That unit can arrive on the battlefield this turn.",
         "restriction": ""
       },
       "cost": {
-        "cp": 1,
+        "cp": 0,
         "turn": "Your turn",
-        "phase": "Command phase"
+        "phase": "Movement phase"
       },
-      "type": "Core Stratagem – Strategic Ploy Stratagem",
-      "legend": "High command has received new intelligence."
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "Swift deployment of reserves can turn the tide of battle in critical moments."
+    },
+    {
+      "title": "RAPID DEPLOYMENT",
+      "color": "#388e3c",
+      "body": {
+        "when": "Your Movement phase, during your first turn.",
+        "target": "One unit from your army that is in Strategic Reserves.",
+        "effect": "That unit can arrive on the battlefield this turn.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 0,
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "Swift deployment of reserves can turn the tide of battle in critical moments."
+    },
+    {
+      "title": "RAPID DEPLOYMENT",
+      "color": "#388e3c",
+      "body": {
+        "when": "Movement phase, в течение вашего первого хода.",
+        "target": "Один юнит вашей армии, находящийся в стратегических резервах.",
+        "effect": "Этот юнит может прибыть на поле боя в этот ход.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 0,
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "Swift deployment of reserves can turn the tide of battle in critical moments."
+    },
+    {
+      "title": "RAPID DEPLOYMENT",
+      "color": "#388e3c",
+      "body": {
+        "when": "Movement phase, в течение вашего первого хода.",
+        "target": "Один юнит вашей армии, находящийся в стратегических резервах.",
+        "effect": "Этот юнит может прибыть на поле боя в этот ход.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 0,
+        "turn": "Your turn",
+        "phase": "Movement phase"
+      },
+      "type": "Core – Strategic Ploy Stratagem",
+      "legend": "Swift deployment of reserves can turn the tide of battle in critical moments."
     }
   ]
 }
