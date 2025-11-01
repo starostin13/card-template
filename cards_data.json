@@ -849,6 +849,40 @@
       },
       "type": "Core Stratagem – Strategic Ploy Stratagem",
       "legend": "High command has received new intelligence."
+    },
+    {
+      "title": "PSY GRENADE",
+      "color": "#7b1fa2",
+      "body": {
+        "when": "Your Shooting phase.",
+        "target": "One enemy unit within 8\" of your unit with keyword GRENADE.",
+        "effect": "That unit suffers D3 mortal wounds.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Your turn",
+        "phase": "Shooting phase"
+      },
+      "type": "Core Stratagem – Strategic Ploy Stratagem",
+      "legend": "Psychic grenades can disrupt enemy formations."
+    },
+    {
+      "title": "PSY GRENADE",
+      "color": "#7b1fa2",
+      "body": {
+        "when": "Ваша фаза стрельбы.",
+        "target": "Один вражеский юнит в пределах 8\" от вашего юнита с ключевым словом ГРАНАТЫ.",
+        "effect": "Этот юнит получает D3 mortal wounds.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Ваш ход",
+        "phase": "Фаза стрельбы"
+      },
+      "type": "Core Stratagem – Strategic Ploy Stratagem",
+      "legend": "Психические гранаты могут нарушать вражеские формации."
     }
   ]
 }
