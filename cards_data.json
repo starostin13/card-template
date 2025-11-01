@@ -815,6 +815,40 @@
       },
       "type": "Core – Strategic Ploy Stratagem",
       "legend": "Swift deployment of reserves can turn the tide of battle in critical moments."
+    },
+    {
+      "title": "LATECOMER REINFORCEMENTS",
+      "color": "#1976d2",
+      "body": {
+        "when": "Any moment, even if you forget to use this strategem on the end of 3rd turn",
+        "target": "One of your units in Strategic Reserves.",
+        "effect": "Unit don't counted as destroyed. But if stay in reserves after end of game then counted as destroyed.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 0,
+        "turn": "Any turn",
+        "phase": "Any phase"
+      },
+      "type": "Core Stratagem – Strategic Ploy Stratagem",
+      "legend": "High command has received new intelligence."
+    },
+    {
+      "title": "Запоздавшие подкрепления",
+      "color": "#1976d2",
+      "body": {
+        "when": "В любой момент даже если вы забыли использовать эту стратагемму в конце 3-го хода",
+        "target": "Один из ваших юнитов в стратегических резервах.",
+        "effect": "Юнит не считается уничтоженным. Но если останется в резервах после окончания игры, то будет считаться уничтоженным.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 0,
+        "turn": "Any turn",
+        "phase": "Any phase"
+      },
+      "type": "Core Stratagem – Strategic Ploy Stratagem",
+      "legend": "High command has received new intelligence."
     }
   ]
 }
