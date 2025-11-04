@@ -883,6 +883,74 @@
       },
       "type": "Core Stratagem – Strategic Ploy Stratagem",
       "legend": "Психические гранаты могут нарушать вражеские формации."
+    },
+    {
+      "title": "NOT ON MY WATCH",
+      "color": "#1976d2",
+      "body": {
+        "when": "In any phase, just after opponent roll Crit on attack (to hit or to wound), or 6 on Advance, or 12 on Charge. After opponent apply rerolls by his rules",
+        "target": "Opponent's dice",
+        "effect": "Opponnet should reroll one sucesfull roll (Crit on attack or advance, charge)",
+        "restriction": "You cannot use it on simple success"
+      },
+      "cost": {
+        "cp": 1,
+        "turn":"Any turn",
+        "phase":"Any phase"
+      },
+      "type":"Core – Battle Tactic Stratagem",
+      "legend": "You are legend. You are stop your enemy anyway in absolute cinema style."
+    },
+    {
+      "title": "NOT ON MY WATCH",
+      "color": "#1976d2",
+      "body": {
+        "when": "In any phase, just after opponent roll Crit on attack (to hit or to wound), or 6 on Advance, or 12 on Charge. After opponent apply rerolls by his rules",
+        "target": "Opponent's dice",
+        "effect": "Opponnet should reroll one sucesfull roll (Crit on attack or advance, charge)",
+        "restriction": "You cannot use it on simple success"
+      },
+      "cost": {
+        "cp": 1,
+        "turn":"Any turn",
+        "phase":"Any phase"
+      },
+      "type":"Core – Battle Tactic Stratagem",
+      "legend": "You are legend. You are stop your enemy anyway in absolute cinema style."
+    },
+    {
+      "title": "Не в мою смену",
+      "color": "#1976d2",
+      "body": {
+        "when": "В любую фазу, сразу после того как оппонент выбросил критический успех на атаке (на попадание или пробитие), или 6 на ADVANCE или 12 на CHARGE. Применяется после всех реролов что может совершить оппонент по другим правилам",
+        "target": "Куб оппонента",
+        "effect": "Оппонент должен перебросить один успешный куб (критической атаки на попадание или пробитие, адванса, чаржа)",
+        "restriction": "Нельзя использовать на обычный(не критический) успех"
+      },
+      "cost": {
+        "cp": 1,
+        "turn":"Any turn",
+        "phase":"Any phase"
+      },
+      "type":"Core – Battle Tactic Stratagem",
+      "legend": "You are legend. You are stop your enemy anyway in absolute cinema style."
+    },
+    {
+      "title": "Не в мою смену",
+      "color": "#1976d2",
+      "body": {
+        "when": "В любую фазу, сразу после того как оппонент выбросил критический успех на атаке (на попадание или пробитие), или 6 на ADVANCE или 12 на CHARGE. Применяется после всех реролов что может совершить оппонент по другим правилам",
+        "target": "Куб оппонента",
+        "effect": "Оппонент должен перебросить один успешный куб (критической атаки на попадание или пробитие, адванса, чаржа)",
+        "restriction": "Нельзя использовать на обычный(не критический) успех"
+      },
+      "cost": {
+        "cp": 1,
+        "turn":"Any turn",
+        "phase":"Any phase"
+      },
+      "type":"Core – Battle Tactic Stratagem",
+      "legend": "You are legend. You are stop your enemy anyway in absolute cinema style."
     }
   ]
 }
