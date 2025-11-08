@@ -229,13 +229,10 @@ class ImageSearcher:
         # Search for new image
         image_url = self.search_unsplash(search_query)
         
-        # Fallback to random image if search fails
+        # If search fails, don't use random images as they can misleading
         if not image_url:
-            print(f"Unsplash search failed for '{card_title}', using random image")
-            image_url = self.search_picsum()
-        
-        if not image_url:
-            print(f"Error: Could not find any image for '{card_title}'")
+            print(f"Unsplash search failed for '{card_title}', "
+                  f"no suitable image found")
             return None
         
         # Download image using card-based cache key

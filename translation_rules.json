@@ -1,0 +1,83 @@
+{
+  "translation_rules": {
+    "version": "1.0",
+    "date": "2025-11-01",
+    "do_not_translate": {
+      "game_phases": [
+        "Command phase",
+        "Movement phase",
+        "Shooting phase",
+        "Charge phase",
+        "Fight phase",
+        "Any phase"
+      ],
+      "game_steps": [
+        "Battle-shock step",
+        "Reinforcements step",
+        "Deep Strike"
+      ],
+      "uppercase_terms": {
+        "description": "Любые слова написанные ПОЛНОСТЬЮ ЗАГЛАВНЫМИ БУКВАМИ не переводятся",
+        "examples": [
+          "INFANTRY",
+          "VEHICLE",
+          "CHARACTER",
+          "WALKER",
+          "SMOKE",
+          "GRENADES",
+          "TITANIC",
+          "[PRECISION]",
+          "Benefit of Cover",
+          "Engagement Range"
+        ]
+      },
+      "special_terms": {
+        "unit": "юнит",
+        "model": "модель",
+        "VEHICLE": "ТРАНСПОРТ",
+        "CHARACTER": "ПЕРСОНАЖ",
+        "note": "VEHICLE и CHARACTER переводятся заглавными буквами"
+      }
+    },
+    "translation_mapping": {
+      "Benefit of Cover": "преимущества укрытия",
+      "Engagement Range": "пределы досягаемости",
+      "Hit roll": "бросок на попадание",
+      "Wound roll": "бросок на ранение",
+      "Damage roll": "бросок на урон",
+      "mortal wound": "смертельная рана",
+      "invulnerable save": "непробиваемое спасение",
+      "Charge move": "движение атаки",
+      "Advance roll": "бросок на продвижение",
+      "saving throw": "спасбросок",
+      "Battle-shock test": "тест на боевой шок"
+    },
+    "translation_instructions": {
+      "title": "Всегда оставлять на английском",
+      "body": {
+        "when": "Название фазы на английском + описание на русском",
+        "target": "Игровые термины на английском/заглавными + описание на русском",
+        "effect": "Игровые термины на английском/заглавными + описание на русском",
+        "restriction": "Полностью на русском с сохранением игровых терминов"
+      },
+      "preserve_formatting": [
+        "Сохранять кавычки",
+        "Сохранять символы \" для обозначения дюймов",
+        "Сохранять числа и D6",
+        "Сохранять структуру предложений"
+      ]
+    },
+    "examples": {
+      "correct": {
+        "when": "Shooting phase, сразу после того как вражеский юнит выбрал цели.",
+        "target": "Один INFANTRY юнит вашей армии, который был выбран целью атак.",
+        "effect": "До конца фазы все модели получают Benefit of Cover."
+      },
+      "incorrect": {
+        "when": "Фаза стрельбы, сразу после того как вражеский юнит выбрал цели.",
+        "target": "Один ПЕХОТНЫЙ юнит вашей армии, который был выбран целью атак.",
+        "effect": "До конца фазы все модели получают преимущество укрытия."
+      }
+    }
+  }
+}

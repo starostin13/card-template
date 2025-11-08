@@ -1,0 +1,38 @@
+{
+  "cards": [
+    {
+      "title": "GO TO GROUND",
+      "color": "#388e3c",
+      "body": {
+        "when": "Фаза стрельбы противника, сразу после того как вражеский юнит выбрал цели.",
+        "target": "Один ПЕХОТНЫЙ юнит вашей армии, который был выбран целью одной или более атак атакующего юнита.",
+        "effect": "До конца фазы все модели вашего юнита получают непробиваемое спасение 6+ и преимущества укрытия.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      "type": "Core – Battle Tactic Stratagem",
+      "legend": "Seeking salvation from incoming fire, warriors hurl themselves into whatever cover they can find."
+    },
+    {
+      "title": "GO TO GROUND",
+      "color": "#388e3c",
+      "body": {
+        "when": "Фаза стрельбы противника, сразу после того как вражеский юнит выбрал цели.",
+        "target": "Один ПЕХОТНЫЙ юнит вашей армии, который был выбран целью одной или более атак атакующего юнита.",
+        "effect": "До конца фазы все модели вашего юнита получают непробиваемое спасение 6+ и преимущества укрытия.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1,
+        "turn": "Opponent’s turn",
+        "phase": "Shooting phase"
+      },
+      "type": "Core – Battle Tactic Stratagem",
+      "legend": "Seeking salvation from incoming fire, warriors hurl themselves into whatever cover they can find."
+    }
+  ]
+}
