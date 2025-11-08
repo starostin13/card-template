@@ -181,6 +181,11 @@ class CardGenerator:
             c.setFont("Helvetica-Bold", 8)
             c.drawCentredString(cost_x, cost_y - 0.03 * inch, str(total_cost))
         
+        # Draw faction logo in top left corner (symmetrical to cost)
+        faction = card_data.get('faction', '')
+        if faction:
+            self._draw_faction_logo(c, x + 0.3 * inch, y + card_h - 0.25 * inch, faction)
+        
         # Draw card body
         body = card_data.get('body', {})
         if body:
@@ -539,6 +544,56 @@ class CardGenerator:
         c.save()
         print(f"PDF generated successfully: {output_file}")
         print(f"Total cards: {len(cards)}")
+    
+    def _draw_faction_logo(self, c, x, y, faction):
+        """
+        Draw faction logo at the specified position.
+        
+        Args:
+            c: Canvas object
+            x: X position for the logo center
+            y: Y position for the logo center  
+            faction: Faction name
+        """
+        # Mapping of faction names to logo files
+        faction_logo_map = {
+            "Общие стратагемы": "general.png",
+            "Абордаж": "boarding.png", 
+            "Претендент": "challenger.png",
+            "Базовые стратагемы": "core.png",
+            "Adeptus Astartes": "space_marines.png",
+            "Chaos": "chaos.png",
+            "Imperial Guard": "imperial_guard.png", 
+            "Orks": "orks.png",
+            "Necrons": "necrons.png",
+            "Tyranids": "tyranids.png",
+            "Eldar": "eldar.png"
+        }
+        
+        # Get logo filename
+        logo_filename = faction_logo_map.get(faction, "general.png")
+        logo_path = os.path.join("faction_logos", logo_filename)
+        
+        # Check if logo file exists
+        if not os.path.exists(logo_path):
+            print(f"Warning: Faction logo not found: {logo_path}")
+            return
+        
+        try:
+            # Load and draw the logo
+            logo_size = 0.24 * inch  # 24 points = about 1/3 inch
+            
+            # Calculate position (center the logo)
+            logo_x = x - logo_size / 2
+            logo_y = y - logo_size / 2
+            
+            # Draw the logo
+            c.drawImage(logo_path, logo_x, logo_y, 
+                       width=logo_size, height=logo_size, 
+                       preserveAspectRatio=True, mask='auto')
+            
+        except Exception as e:
+            print(f"Warning: Could not draw faction logo {logo_path}: {e}")
 
 
 def main():

@@ -1,0 +1,60 @@
+{
+  "cards": [
+    {
+      "title": "EXPLOSIVE CLEARANCE",
+      "faction": "Общие стратагемы",
+      "color": "#2196f3",
+      "body": {
+        "when": "В вашу фазу стрельбы.",
+        "target": "Одно подразделение из вашей армии",
+        "effect": "Выберите одну модель с оружием [ВЗРЫВ]. До конца фазы атаки могут быть назначены невидимым моделям.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 1
+      }
+    },
+    {
+      "title": "BATTLEFIELD COMMAND", 
+      "faction": "Абордаж",
+      "color": "#f44336",
+      "body": {
+        "when": "Start or end of any phase.",
+        "target": "One Leader unit and one Bodyguard unit within 6\"",
+        "effect": "Select one Leader ability. The Bodyguard is treated as led by that Leader until next Command phase.",
+        "restriction": "Once per Command phase per unit"
+      },
+      "cost": {
+        "cp": 1
+      }
+    },
+    {
+      "title": "GREAT HASTE",
+      "faction": "Претендент", 
+      "color": "#4caf50",
+      "body": {
+        "when": "Your Movement phase.",
+        "target": "One unit that has not moved this phase.",
+        "effect": "Add D6\" to the Move characteristic of models in your unit until end of phase.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 0
+      }
+    },
+    {
+      "title": "COUNTER-OFFENSIVE",
+      "faction": "Базовые стратагемы",
+      "color": "#f44336", 
+      "body": {
+        "when": "Fight phase, just after an enemy unit has fought.",
+        "target": "One unit within Engagement Range that has not fought this phase.",
+        "effect": "Your unit fights next.",
+        "restriction": ""
+      },
+      "cost": {
+        "cp": 2
+      }
+    }
+  ]
+}
