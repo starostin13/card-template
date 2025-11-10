@@ -14,6 +14,8 @@ from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
 from reportlab.lib.colors import HexColor, black, white
 from reportlab.lib.utils import ImageReader
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
 import os
 from image_search import ImageSearcher
 from PIL import Image, ImageDraw, ImageFilter
@@ -36,6 +38,9 @@ class CardGenerator:
         self.page_width, self.page_height = page_size
         self.auto_search_images = auto_search_images
         self.gradient_enabled = gradient_enabled
+        
+        # Register Unicode fonts for Cyrillic support
+        self._register_unicode_fonts()
         
         # Initialize image searcher if auto search is enabled
         if self.auto_search_images:
@@ -71,6 +76,101 @@ class CardGenerator:
             'black': HexColor('#424242'),
             'colorless': HexColor('#9e9e9e')
         }
+    
+    def _register_unicode_fonts(self):
+        """Register Unicode fonts for Cyrillic support."""
+        try:
+            # Try to find and register DejaVu Sans fonts (good Unicode support)
+            font_paths = [
+                # Windows paths
+                'C:/Windows/Fonts/dejavu-sans.ttf',
+                'C:/Windows/Fonts/DejaVuSans.ttf',
+                # Alternative Windows locations
+                'C:/Windows/Fonts/arial.ttf',
+                'C:/Windows/Fonts/arialbold.ttf',
+                # System font fallbacks
+                os.path.expanduser('~/.fonts/DejaVuSans.ttf'),
+                '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',
+                '/usr/share/fonts/TTF/DejaVuSans.ttf',
+                # Alternative system fonts with Cyrillic support
+                '/System/Library/Fonts/Arial.ttf',
+                'C:/Windows/Fonts/calibri.ttf',
+                'C:/Windows/Fonts/segoeui.ttf'
+            ]
+            
+            # Try to register fonts
+            registered_fonts = {}
+            
+            for font_path in font_paths:
+                if os.path.exists(font_path):
+                    try:
+                        font_name = os.path.splitext(os.path.basename(font_path))[0]
+                        
+                        # Register different font weights
+                        if 'bold' in font_name.lower() or 'Bold' in font_name:
+                            pdfmetrics.registerFont(TTFont('UnicodeFont-Bold', font_path))
+                            registered_fonts['bold'] = font_path
+                            print(f"Registered Unicode bold font: {font_path}")
+                        else:
+                            pdfmetrics.registerFont(TTFont('UnicodeFont', font_path))
+                            registered_fonts['regular'] = font_path
+                            print(f"Registered Unicode regular font: {font_path}")
+                            
+                        # If we found Arial, also try to find Arial Bold
+                        if 'arial.ttf' in font_path.lower():
+                            bold_path = font_path.replace('arial.ttf', 'arialbd.ttf')
+                            if os.path.exists(bold_path):
+                                pdfmetrics.registerFont(TTFont('UnicodeFont-Bold', bold_path))
+                                registered_fonts['bold'] = bold_path
+                                print(f"Registered Unicode bold font: {bold_path}")
+                                
+                    except Exception as e:
+                        print(f"Failed to register font {font_path}: {e}")
+                        continue
+            
+            # Check if we have at least one font registered
+            if not registered_fonts:
+                print("Warning: No Unicode fonts registered. Cyrillic text may not display correctly.")
+            else:
+                print(f"Successfully registered {len(registered_fonts)} Unicode font(s)")
+                self.unicode_fonts_available = True
+                return
+                
+        except Exception as e:
+            print(f"Error registering Unicode fonts: {e}")
+        
+        self.unicode_fonts_available = False
+    
+    def _get_font_name(self, bold=False, italic=False):
+        """Get appropriate font name with Unicode support if available."""
+        if hasattr(self, 'unicode_fonts_available') and self.unicode_fonts_available:
+            if bold:
+                try:
+                    # Check if bold Unicode font is registered
+                    pdfmetrics.getFont('UnicodeFont-Bold')
+                    return 'UnicodeFont-Bold'
+                except:
+                    # Fall back to regular Unicode font
+                    try:
+                        pdfmetrics.getFont('UnicodeFont')
+                        return 'UnicodeFont'
+                    except:
+                        pass
+            else:
+                try:
+                    # Check if regular Unicode font is registered
+                    pdfmetrics.getFont('UnicodeFont')
+                    return 'UnicodeFont'
+                except:
+                    pass
+        
+        # Fall back to default fonts
+        if bold:
+            return "Helvetica-Bold"
+        elif italic:
+            return "Helvetica-Oblique"
+        else:
+            return "Helvetica"
     
     def _calculate_optimal_layout(self):
         """Calculate optimal card layout with rotation if beneficial."""
@@ -162,29 +262,9 @@ class CardGenerator:
         
         # Draw title
         c.setFillColor(white)
-        c.setFont("Helvetica-Bold", 12)
+        c.setFont(self._get_font_name(bold=True), 12)
         title = card_data.get('title', 'Card Title')
         c.drawCentredString(x + card_w / 2, y + card_h - 0.3 * inch, title)
-        
-        # Draw mana cost in top right corner
-        cost_data = card_data.get('cost', {})
-        if cost_data:
-            cost_x = x + card_w - 0.3 * inch
-            cost_y = y + card_h - 0.25 * inch
-            total_cost = sum(cost_data.values())
-            
-            # Draw total cost circle (no color)
-            c.setFillColor(white)
-            c.setStrokeColor(black)
-            c.circle(cost_x, cost_y, 0.12 * inch, stroke=1, fill=1)
-            c.setFillColor(black)
-            c.setFont("Helvetica-Bold", 8)
-            c.drawCentredString(cost_x, cost_y - 0.03 * inch, str(total_cost))
-        
-        # Draw faction logo in top left corner (symmetrical to cost)
-        faction = card_data.get('faction', '')
-        if faction:
-            self._draw_faction_logo(c, x + 0.3 * inch, y + card_h - 0.25 * inch, faction)
         
         # Draw card body
         body = card_data.get('body', {})
@@ -228,10 +308,10 @@ class CardGenerator:
             # When
             when = body.get('when', '')
             if when:
-                c.setFont("Helvetica-Bold", 8)
+                c.setFont(self._get_font_name(bold=True), 8)
                 c.setFillColor(HexColor(card_color))  # Use card color for keyword
                 c.drawString(x + 0.1 * inch, text_y, "When:")
-                c.setFont("Helvetica", 8)
+                c.setFont(self._get_font_name(), 8)
                 c.setFillColor(self.text_color)  # Normal color for text
                 c.drawString(x + 0.5 * inch, text_y, when[:35])
                 text_y -= 0.15 * inch
@@ -239,10 +319,10 @@ class CardGenerator:
             # Target
             target = body.get('target', '')
             if target:
-                c.setFont("Helvetica-Bold", 8)
+                c.setFont(self._get_font_name(bold=True), 8)
                 c.setFillColor(HexColor(card_color))  # Use card color for keyword
                 c.drawString(x + 0.1 * inch, text_y, "Target:")
-                c.setFont("Helvetica", 8)
+                c.setFont(self._get_font_name(), 8)
                 c.setFillColor(self.text_color)  # Normal color for text
                 c.drawString(x + 0.5 * inch, text_y, target[:32])
                 text_y -= 0.15 * inch
@@ -250,10 +330,10 @@ class CardGenerator:
             # Effect
             effect = body.get('effect', '')
             if effect:
-                c.setFont("Helvetica-Bold", 8)
+                c.setFont(self._get_font_name(bold=True), 8)
                 c.setFillColor(HexColor(card_color))  # Use card color for keyword
                 c.drawString(x + 0.1 * inch, text_y, "Effect:")
-                c.setFont("Helvetica", 8)
+                c.setFont(self._get_font_name(), 8)
                 c.setFillColor(self.text_color)  # Normal color for text
                 # Handle long effect text
                 effect_lines = self._wrap_text(effect, 32)
@@ -265,28 +345,52 @@ class CardGenerator:
             # Restriction
             restriction = body.get('restriction', '')
             if restriction and restriction.lower() != 'none':
-                c.setFont("Helvetica-Bold", 7)
+                c.setFont(self._get_font_name(bold=True), 7)
                 c.setFillColor(HexColor(card_color))  # Use card color for "Restriction:" keyword
                 c.drawString(x + 0.1 * inch, text_y, "Restriction:")
-                c.setFont("Helvetica-Oblique", 7)
+                c.setFont(self._get_font_name(italic=True), 7)
                 c.setFillColor(self.subtitle_color)  # Keep subtitle color for restriction text
                 restriction_lines = self._wrap_text(restriction, 35)
                 for line in restriction_lines[:2]:  # Max 2 lines
                     c.drawString(x + 0.7 * inch, text_y, line)
                     text_y -= 0.1 * inch
         
-        # Draw mana cost breakdown at bottom (no colors)
+        # Draw bottom section with mana cost, faction logo, and cost breakdown
+        cost_data = card_data.get('cost', {})
+        faction = card_data.get('faction', '')
+        
+        # Bottom area positioning
+        bottom_y = y + 0.15 * inch
+        
+        # Draw faction logo in bottom left corner
+        if faction:
+            self._draw_faction_logo(c, x + 0.2 * inch, bottom_y + 0.1 * inch, faction)
+        
+        # Draw total mana cost circle in bottom right corner
         if cost_data:
-            cost_y = y + 0.15 * inch
-            cost_x = x + 0.1 * inch
-            c.setFont("Helvetica", 7)
-            c.setFillColor(self.text_color)  # Use standard text color
+            total_cost = sum(cost_data.values())
+            cost_x = x + card_w - 0.3 * inch
+            cost_y = bottom_y + 0.1 * inch
+            
+            # Draw total cost circle
+            c.setFillColor(white)
+            c.setStrokeColor(black)
+            c.circle(cost_x, cost_y, 0.12 * inch, stroke=1, fill=1)
+            c.setFillColor(black)
+            c.setFont(self._get_font_name(bold=True), 8)
+            c.drawCentredString(cost_x, cost_y - 0.03 * inch, str(total_cost))
+        
+        # Draw mana cost breakdown in center bottom
+        if cost_data:
+            breakdown_x = x + 0.5 * inch  # Center position, between logo and cost circle
+            c.setFont(self._get_font_name(), 7)
+            c.setFillColor(self.text_color)
             cost_text = []
             for mana_type, amount in cost_data.items():
                 if amount > 0:
                     cost_text.append(f"{mana_type.title()}: {amount}")
             if cost_text:
-                c.drawString(cost_x, cost_y, " | ".join(cost_text))
+                c.drawString(breakdown_x, bottom_y, " | ".join(cost_text))
         
         if rotated:
             c.restoreState()
