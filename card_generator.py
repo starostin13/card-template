@@ -16,71 +16,10 @@ from reportlab.lib.colors import HexColor, black, white
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.pdfbase.cidfonts import UnicodeCIDFont
 import os
 from image_search import ImageSearcher
 from PIL import Image, ImageDraw, ImageFilter
 import io
-import sys
-
-# Register Unicode fonts for Cyrillic support
-FONT_LOADED = False
-try:
-    # Try to load Arial fonts (Windows)
-    arial_regular = 'C:/Windows/Fonts/arial.ttf'
-    arial_bold = 'C:/Windows/Fonts/arialbd.ttf'
-    arial_italic = 'C:/Windows/Fonts/ariali.ttf'
-    
-    fonts_loaded = []
-    
-    # Try regular
-    if os.path.exists(arial_regular):
-        try:
-            pdfmetrics.registerFont(TTFont('ArialUnicode', arial_regular))
-            FONT_REGULAR = 'ArialUnicode'
-            fonts_loaded.append('Arial Regular')
-        except Exception as e:
-            print(f"× Failed to load Arial Regular: {e}")
-            FONT_REGULAR = 'Helvetica'
-    else:
-        FONT_REGULAR = 'Helvetica'
-    
-    # Try bold
-    if os.path.exists(arial_bold):
-        try:
-            pdfmetrics.registerFont(TTFont('ArialUnicode-Bold', arial_bold))
-            FONT_BOLD = 'ArialUnicode-Bold'
-            fonts_loaded.append('Arial Bold')
-        except Exception as e:
-            print(f"× Failed to load Arial Bold: {e}")
-            FONT_BOLD = FONT_REGULAR
-    else:
-        FONT_BOLD = FONT_REGULAR
-    
-    # Try italic
-    if os.path.exists(arial_italic):
-        try:
-            pdfmetrics.registerFont(TTFont('ArialUnicode-Italic', arial_italic))
-            FONT_ITALIC = 'ArialUnicode-Italic'
-            fonts_loaded.append('Arial Italic')
-        except Exception as e:
-            print(f"× Failed to load Arial Italic: {e}")
-            FONT_ITALIC = FONT_REGULAR
-    else:
-        FONT_ITALIC = FONT_REGULAR
-    
-    if fonts_loaded:
-        FONT_LOADED = True
-        print(f"✓ Loaded fonts: {', '.join(fonts_loaded)}")
-    else:
-        raise Exception("No suitable font found")
-        
-except Exception as e:
-    print(f"⚠ Font loading failed: {e}")
-    print("⚠ Using fallback Helvetica (no Cyrillic support)")
-    FONT_REGULAR = 'Helvetica'
-    FONT_BOLD = 'Helvetica-Bold'
-    FONT_ITALIC = 'Helvetica-Oblique'
 
 
 class CardGenerator:
@@ -99,6 +38,9 @@ class CardGenerator:
         self.page_width, self.page_height = page_size
         self.auto_search_images = auto_search_images
         self.gradient_enabled = gradient_enabled
+        
+        # Register Unicode fonts for Cyrillic support
+        self._register_unicode_fonts()
         
         # Initialize image searcher if auto search is enabled
         if self.auto_search_images:
@@ -134,6 +76,101 @@ class CardGenerator:
             'black': HexColor('#424242'),
             'colorless': HexColor('#9e9e9e')
         }
+    
+    def _register_unicode_fonts(self):
+        """Register Unicode fonts for Cyrillic support."""
+        try:
+            # Try to find and register DejaVu Sans fonts (good Unicode support)
+            font_paths = [
+                # Windows paths
+                'C:/Windows/Fonts/dejavu-sans.ttf',
+                'C:/Windows/Fonts/DejaVuSans.ttf',
+                # Alternative Windows locations
+                'C:/Windows/Fonts/arial.ttf',
+                'C:/Windows/Fonts/arialbold.ttf',
+                # System font fallbacks
+                os.path.expanduser('~/.fonts/DejaVuSans.ttf'),
+                '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',
+                '/usr/share/fonts/TTF/DejaVuSans.ttf',
+                # Alternative system fonts with Cyrillic support
+                '/System/Library/Fonts/Arial.ttf',
+                'C:/Windows/Fonts/calibri.ttf',
+                'C:/Windows/Fonts/segoeui.ttf'
+            ]
+            
+            # Try to register fonts
+            registered_fonts = {}
+            
+            for font_path in font_paths:
+                if os.path.exists(font_path):
+                    try:
+                        font_name = os.path.splitext(os.path.basename(font_path))[0]
+                        
+                        # Register different font weights
+                        if 'bold' in font_name.lower() or 'Bold' in font_name:
+                            pdfmetrics.registerFont(TTFont('UnicodeFont-Bold', font_path))
+                            registered_fonts['bold'] = font_path
+                            print(f"Registered Unicode bold font: {font_path}")
+                        else:
+                            pdfmetrics.registerFont(TTFont('UnicodeFont', font_path))
+                            registered_fonts['regular'] = font_path
+                            print(f"Registered Unicode regular font: {font_path}")
+                            
+                        # If we found Arial, also try to find Arial Bold
+                        if 'arial.ttf' in font_path.lower():
+                            bold_path = font_path.replace('arial.ttf', 'arialbd.ttf')
+                            if os.path.exists(bold_path):
+                                pdfmetrics.registerFont(TTFont('UnicodeFont-Bold', bold_path))
+                                registered_fonts['bold'] = bold_path
+                                print(f"Registered Unicode bold font: {bold_path}")
+                                
+                    except Exception as e:
+                        print(f"Failed to register font {font_path}: {e}")
+                        continue
+            
+            # Check if we have at least one font registered
+            if not registered_fonts:
+                print("Warning: No Unicode fonts registered. Cyrillic text may not display correctly.")
+            else:
+                print(f"Successfully registered {len(registered_fonts)} Unicode font(s)")
+                self.unicode_fonts_available = True
+                return
+                
+        except Exception as e:
+            print(f"Error registering Unicode fonts: {e}")
+        
+        self.unicode_fonts_available = False
+    
+    def _get_font_name(self, bold=False, italic=False):
+        """Get appropriate font name with Unicode support if available."""
+        if hasattr(self, 'unicode_fonts_available') and self.unicode_fonts_available:
+            if bold:
+                try:
+                    # Check if bold Unicode font is registered
+                    pdfmetrics.getFont('UnicodeFont-Bold')
+                    return 'UnicodeFont-Bold'
+                except:
+                    # Fall back to regular Unicode font
+                    try:
+                        pdfmetrics.getFont('UnicodeFont')
+                        return 'UnicodeFont'
+                    except:
+                        pass
+            else:
+                try:
+                    # Check if regular Unicode font is registered
+                    pdfmetrics.getFont('UnicodeFont')
+                    return 'UnicodeFont'
+                except:
+                    pass
+        
+        # Fall back to default fonts
+        if bold:
+            return "Helvetica-Bold"
+        elif italic:
+            return "Helvetica-Oblique"
+        else:
+            return "Helvetica"
     
     def _calculate_optimal_layout(self):
         """Calculate optimal card layout with rotation if beneficial."""
@@ -225,7 +262,7 @@ class CardGenerator:
         
         # Draw title
         c.setFillColor(white)
-        c.setFont(FONT_BOLD, 12)
+        c.setFont(self._get_font_name(bold=True), 12)
         title = card_data.get('title', 'Card Title')
         c.drawCentredString(x + card_w / 2, y + card_h - 0.3 * inch, title)
         
@@ -271,109 +308,89 @@ class CardGenerator:
             # When
             when = body.get('when', '')
             if when:
-                # Draw "When: " in color, then text in normal color on same line
-                when_text = f"When: {when}"
-                when_lines = self._wrap_text(when_text, 22)  # Reduced from 30
-                for i, line in enumerate(when_lines[:3]):  # Max 3 lines
-                    if i == 0:
-                        # First line: draw "When:" in color
-                        c.setFont(FONT_BOLD, 12)
-                        c.setFillColor(HexColor(card_color))
-                        c.drawString(x + 0.1 * inch, text_y, "When:")
-                        c.setFont(FONT_REGULAR, 12)
-                        c.setFillColor(self.text_color)
-                        remaining_text = line[5:]  # Remove "When:"
-                        c.drawString(x + 0.55 * inch, text_y, remaining_text)
-                    else:
-                        # Continuation lines: normal text only
-                        c.setFont(FONT_REGULAR, 12)
-                        c.setFillColor(self.text_color)
-                        c.drawString(x + 0.1 * inch, text_y, line)
-                    text_y -= 0.18 * inch
-                text_y -= 0.05 * inch
+                c.setFont(self._get_font_name(bold=True), 8)
+                c.setFillColor(HexColor(card_color))  # Use card color for keyword
+                c.drawString(x + 0.1 * inch, text_y, "When:")
+                c.setFont(self._get_font_name(), 8)
+                c.setFillColor(self.text_color)  # Normal color for text
+                c.drawString(x + 0.5 * inch, text_y, when[:35])
+                text_y -= 0.15 * inch
             
             # Target
             target = body.get('target', '')
             if target:
-                target_text = f"Target: {target}"
-                target_lines = self._wrap_text(target_text, 22)  # Reduced from 30
-                for i, line in enumerate(target_lines[:3]):  # Max 3 lines
-                    if i == 0:
-                        c.setFont(FONT_BOLD, 12)
-                        c.setFillColor(HexColor(card_color))
-                        c.drawString(x + 0.1 * inch, text_y, "Target:")
-                        c.setFont(FONT_REGULAR, 12)
-                        c.setFillColor(self.text_color)
-                        remaining_text = line[7:]  # Remove "Target:"
-                        c.drawString(x + 0.65 * inch, text_y, remaining_text)
-                    else:
-                        c.setFont(FONT_REGULAR, 12)
-                        c.setFillColor(self.text_color)
-                        c.drawString(x + 0.1 * inch, text_y, line)
-                    text_y -= 0.18 * inch
-                text_y -= 0.05 * inch
+                c.setFont(self._get_font_name(bold=True), 8)
+                c.setFillColor(HexColor(card_color))  # Use card color for keyword
+                c.drawString(x + 0.1 * inch, text_y, "Target:")
+                c.setFont(self._get_font_name(), 8)
+                c.setFillColor(self.text_color)  # Normal color for text
+                c.drawString(x + 0.5 * inch, text_y, target[:32])
+                text_y -= 0.15 * inch
             
             # Effect
             effect = body.get('effect', '')
             if effect:
-                effect_text = f"Effect: {effect}"
-                effect_lines = self._wrap_text(effect_text, 22)  # Reduced from 30
-                for i, line in enumerate(effect_lines[:4]):  # Max 4 lines
-                    if i == 0:
-                        c.setFont(FONT_BOLD, 12)
-                        c.setFillColor(HexColor(card_color))
-                        c.drawString(x + 0.1 * inch, text_y, "Effect:")
-                        c.setFont(FONT_REGULAR, 12)
-                        c.setFillColor(self.text_color)
-                        remaining_text = line[7:]  # Remove "Effect:"
-                        c.drawString(x + 0.65 * inch, text_y, remaining_text)
-                    else:
-                        c.setFont(FONT_REGULAR, 12)
-                        c.setFillColor(self.text_color)
-                        c.drawString(x + 0.1 * inch, text_y, line)
-                    text_y -= 0.18 * inch
-                text_y -= 0.05 * inch
+                c.setFont(self._get_font_name(bold=True), 8)
+                c.setFillColor(HexColor(card_color))  # Use card color for keyword
+                c.drawString(x + 0.1 * inch, text_y, "Effect:")
+                c.setFont(self._get_font_name(), 8)
+                c.setFillColor(self.text_color)  # Normal color for text
+                # Handle long effect text
+                effect_lines = self._wrap_text(effect, 32)
+                for line in effect_lines[:2]:  # Max 2 lines
+                    c.drawString(x + 0.5 * inch, text_y, line)
+                    text_y -= 0.12 * inch
+                text_y -= 0.03 * inch
             
             # Restriction
             restriction = body.get('restriction', '')
             if restriction and restriction.lower() != 'none':
-                restriction_text = f"Restriction: {restriction}"
-                restriction_lines = self._wrap_text(restriction_text, 20)  # Reduced
-                for i, line in enumerate(restriction_lines[:3]):  # Max 3 lines
-                    if i == 0:
-                        c.setFont(FONT_BOLD, 12)
-                        c.setFillColor(HexColor(card_color))
-                        c.drawString(x + 0.1 * inch, text_y, "Restriction:")
-                        c.setFont(FONT_ITALIC, 12)
-                        c.setFillColor(self.subtitle_color)
-                        remaining_text = line[12:]  # Remove "Restriction:"
-                        c.drawString(x + 0.95 * inch, text_y, remaining_text)
-                    else:
-                        c.setFont(FONT_ITALIC, 12)
-                        c.setFillColor(self.subtitle_color)
-                        c.drawString(x + 0.1 * inch, text_y, line)
-                    text_y -= 0.18 * inch
+                c.setFont(self._get_font_name(bold=True), 7)
+                c.setFillColor(HexColor(card_color))  # Use card color for "Restriction:" keyword
+                c.drawString(x + 0.1 * inch, text_y, "Restriction:")
+                c.setFont(self._get_font_name(italic=True), 7)
+                c.setFillColor(self.subtitle_color)  # Keep subtitle color for restriction text
+                restriction_lines = self._wrap_text(restriction, 35)
+                for line in restriction_lines[:2]:  # Max 2 lines
+                    c.drawString(x + 0.7 * inch, text_y, line)
+                    text_y -= 0.1 * inch
         
-        # Draw CP cost in bottom right corner
+        # Draw bottom section with mana cost, faction logo, and cost breakdown
         cost_data = card_data.get('cost', {})
+        faction = card_data.get('faction', '')
+        
+        # Bottom area positioning
+        bottom_y = y + 0.15 * inch
+        
+        # Draw faction logo in bottom left corner
+        if faction:
+            self._draw_faction_logo(c, x + 0.2 * inch, bottom_y + 0.1 * inch, faction)
+        
+        # Draw total mana cost circle in bottom right corner
         if cost_data:
-            cost_x = x + card_w - 0.25 * inch
-            cost_y = y + 0.25 * inch
-            # Get CP cost (handle both old and new format)
-            if 'cp' in cost_data:
-                total_cost = cost_data.get('cp', 0)
-            else:
-                # Old format - sum numeric values only
-                total_cost = sum(v for v in cost_data.values() 
-                               if isinstance(v, (int, float)))
+            total_cost = sum(cost_data.values())
+            cost_x = x + card_w - 0.3 * inch
+            cost_y = bottom_y + 0.1 * inch
             
-            # Draw total cost circle with card color (bigger size)
-            c.setFillColor(HexColor(card_color))
-            c.setStrokeColor(HexColor(card_color))
-            c.circle(cost_x, cost_y, 0.18 * inch, stroke=1, fill=1)
+            # Draw total cost circle
             c.setFillColor(white)
-            c.setFont(FONT_BOLD, 14)
-            c.drawCentredString(cost_x, cost_y - 0.04 * inch, str(total_cost))
+            c.setStrokeColor(black)
+            c.circle(cost_x, cost_y, 0.12 * inch, stroke=1, fill=1)
+            c.setFillColor(black)
+            c.setFont(self._get_font_name(bold=True), 8)
+            c.drawCentredString(cost_x, cost_y - 0.03 * inch, str(total_cost))
+        
+        # Draw mana cost breakdown in center bottom
+        if cost_data:
+            breakdown_x = x + 0.5 * inch  # Center position, between logo and cost circle
+            c.setFont(self._get_font_name(), 7)
+            c.setFillColor(self.text_color)
+            cost_text = []
+            for mana_type, amount in cost_data.items():
+                if amount > 0:
+                    cost_text.append(f"{mana_type.title()}: {amount}")
+            if cost_text:
+                c.drawString(breakdown_x, bottom_y, " | ".join(cost_text))
         
         if rotated:
             c.restoreState()
@@ -631,6 +648,56 @@ class CardGenerator:
         c.save()
         print(f"PDF generated successfully: {output_file}")
         print(f"Total cards: {len(cards)}")
+    
+    def _draw_faction_logo(self, c, x, y, faction):
+        """
+        Draw faction logo at the specified position.
+        
+        Args:
+            c: Canvas object
+            x: X position for the logo center
+            y: Y position for the logo center  
+            faction: Faction name
+        """
+        # Mapping of faction names to logo files
+        faction_logo_map = {
+            "Общие стратагемы": "general.png",
+            "Абордаж": "boarding.png", 
+            "Претендент": "challenger.png",
+            "Базовые стратагемы": "core.png",
+            "Adeptus Astartes": "space_marines.png",
+            "Chaos": "chaos.png",
+            "Imperial Guard": "imperial_guard.png", 
+            "Orks": "orks.png",
+            "Necrons": "necrons.png",
+            "Tyranids": "tyranids.png",
+            "Eldar": "eldar.png"
+        }
+        
+        # Get logo filename
+        logo_filename = faction_logo_map.get(faction, "general.png")
+        logo_path = os.path.join("faction_logos", logo_filename)
+        
+        # Check if logo file exists
+        if not os.path.exists(logo_path):
+            print(f"Warning: Faction logo not found: {logo_path}")
+            return
+        
+        try:
+            # Load and draw the logo
+            logo_size = 0.24 * inch  # 24 points = about 1/3 inch
+            
+            # Calculate position (center the logo)
+            logo_x = x - logo_size / 2
+            logo_y = y - logo_size / 2
+            
+            # Draw the logo
+            c.drawImage(logo_path, logo_x, logo_y, 
+                       width=logo_size, height=logo_size, 
+                       preserveAspectRatio=True, mask='auto')
+            
+        except Exception as e:
+            print(f"Warning: Could not draw faction logo {logo_path}: {e}")
 
 
 def main():
