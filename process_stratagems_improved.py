@@ -257,11 +257,13 @@ def process_csv_to_cards(csv_file: str, output_file: str):
             
             # Добавляем карточки согласно правилам дублирования
             if cp_cost <= 1:
-                # Для стоимости 0-1 CP добавляем по 2 копии
-                cards.extend([english_card, english_card])
-                cards.extend([russian_card, russian_card])
+                # Для стоимости 0-1 CP добавляем по 2 копии каждой (английская + русская, каждая дважды)
+                cards.append(english_card)
+                cards.append(english_card)
+                cards.append(russian_card)
+                cards.append(russian_card)
             else:
-                # Для стоимости 2+ CP добавляем по 1 копии
+                # Для стоимости 2+ CP добавляем по 1 копии (английская + русская, каждая один раз)
                 cards.append(english_card)
                 cards.append(russian_card)
     
