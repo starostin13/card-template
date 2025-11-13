@@ -1,0 +1,32 @@
+{
+  "cards": [
+    {
+      "title": "Тест длинного Target",
+      "faction": "Тестовая фракция",
+      "color": "#dc2626",
+      "body": {
+        "when": "Начало хода",
+        "target": "Один очень длинный текст для поля target который должен автоматически переноситься на следующую строку и не обрезаться на 32 символах как раньше",
+        "effect": "Короткий эффект",
+        "restriction": "Нет ограничений"
+      },
+      "cost": {
+        "cp": 1
+      }
+    },
+    {
+      "title": "EXPLOSIVE CLEARANCE",
+      "faction": "Общие стратагемы",
+      "color": "#2196f3", 
+      "body": {
+        "when": "Your Shooting phase.",
+        "target": "One unit from your army that has not been selected to shoot this phase.",
+        "effect": "Select one model in your unit that is equipped with a weapon with the [BLAST] ability. Until the end of the phase, when determining how many models are in the target unit for the purpose of that ability, include models that are not visible to the attacking model.",
+        "restriction": "None"
+      },
+      "cost": {
+        "cp": 1
+      }
+    }
+  ]
+}

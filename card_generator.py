@@ -324,8 +324,12 @@ class CardGenerator:
                 c.drawString(x + 0.1 * inch, text_y, "Target:")
                 c.setFont(self._get_font_name(), 8)
                 c.setFillColor(self.text_color)  # Normal color for text
-                c.drawString(x + 0.5 * inch, text_y, target[:32])
-                text_y -= 0.15 * inch
+                # Handle long target text with multiple lines
+                target_lines = self._wrap_text(target, 32)
+                for line in target_lines[:2]:  # Max 2 lines for target
+                    c.drawString(x + 0.5 * inch, text_y, line)
+                    text_y -= 0.12 * inch
+                text_y -= 0.03 * inch
             
             # Effect
             effect = body.get('effect', '')
@@ -345,11 +349,11 @@ class CardGenerator:
             # Restriction
             restriction = body.get('restriction', '')
             if restriction and restriction.lower() != 'none':
-                c.setFont(self._get_font_name(bold=True), 7)
+                c.setFont(self._get_font_name(bold=True), 8)
                 c.setFillColor(HexColor(card_color))  # Use card color for "Restriction:" keyword
                 c.drawString(x + 0.1 * inch, text_y, "Restriction:")
-                c.setFont(self._get_font_name(italic=True), 7)
-                c.setFillColor(self.subtitle_color)  # Keep subtitle color for restriction text
+                c.setFont(self._get_font_name(), 8)
+                c.setFillColor(self.text_color)  # Use same text color as other fields
                 restriction_lines = self._wrap_text(restriction, 35)
                 for line in restriction_lines[:2]:  # Max 2 lines
                     c.drawString(x + 0.7 * inch, text_y, line)
@@ -531,7 +535,11 @@ class CardGenerator:
             content = body_data.get(section, '')
             if content and (section != 'restriction' or content.lower() != 'none'):
                 used_lines += 1  # For the label
-                if section == 'effect':
+                if section == 'target':
+                    # Target can span multiple lines
+                    target_lines = self._wrap_text(content, 32)
+                    used_lines += min(len(target_lines), 2)  # Max 2 lines for target
+                elif section == 'effect':
                     # Effect can span multiple lines
                     effect_lines = self._wrap_text(content, 32)
                     used_lines += min(len(effect_lines), 2)  # Max 2 lines for effect
