@@ -138,6 +138,30 @@ def generate_all_faction_logos():
             "bg_color": "#0891b2",
             "text_color": "#ffffff", 
             "filename": "eldar.png"
+        },
+        "Adeptus Custodes": {
+            "text": "CUST",
+            "bg_color": "#fbbf24",
+            "text_color": "#000000",
+            "filename": "custodes.png"
+        },
+        "Grey Knights": {
+            "text": "GK",
+            "bg_color": "#9ca3af",
+            "text_color": "#ffffff",
+            "filename": "grey_knights.png"
+        },
+        "Death Guard": {
+            "text": "DG",
+            "bg_color": "#4b5563",
+            "text_color": "#22c55e",
+            "filename": "death_guard.png"
+        },
+        "Questoris Imperialis": {
+            "text": "KNIGHT",
+            "bg_color": "#92400e",
+            "text_color": "#ffffff",
+            "filename": "imperial_knights.png"
         }
     }
     

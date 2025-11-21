@@ -25,7 +25,7 @@ import io
 class CardGenerator:
     """Generate PDF cards from JSON data."""
     
-    def __init__(self, page_size=letter, auto_search_images=False, gradient_enabled=True):
+    def __init__(self, page_size=letter, auto_search_images=False, gradient_enabled=True, printer_margins=0.0):
         """
         Initialize the card generator.
         
@@ -33,11 +33,17 @@ class CardGenerator:
             page_size: The page size for the PDF (default: letter)
             auto_search_images: Whether to automatically search for images (default: False)
             gradient_enabled: Whether to apply gradient effects to images (default: True)
+            printer_margins: Printer margins in inches (default: 0.0)
         """
         self.page_size = page_size
         self.page_width, self.page_height = page_size
         self.auto_search_images = auto_search_images
         self.gradient_enabled = gradient_enabled
+        self.printer_margins = printer_margins * inch  # Convert to points
+        
+        # Adjust usable page area for printer margins
+        self.usable_width = self.page_width - (2 * self.printer_margins)
+        self.usable_height = self.page_height - (2 * self.printer_margins)
         
         # Register Unicode fonts for Cyrillic support
         self._register_unicode_fonts()
@@ -174,20 +180,21 @@ class CardGenerator:
     
     def _calculate_optimal_layout(self):
         """Calculate optimal card layout with rotation if beneficial."""
+        # Use usable page area (excluding printer margins)
         # Normal orientation
-        normal_per_row = int(self.page_width / self.card_width)
-        normal_per_col = int(self.page_height / self.card_height)
+        normal_per_row = int(self.usable_width / self.card_width)
+        normal_per_col = int(self.usable_height / self.card_height)
         normal_total = normal_per_row * normal_per_col
         
         # Rotated orientation (90 degrees)
-        rotated_per_row = int(self.page_width / self.card_height)
-        rotated_per_col = int(self.page_height / self.card_width)
+        rotated_per_row = int(self.usable_width / self.card_height)
+        rotated_per_col = int(self.usable_height / self.card_width)
         rotated_total = rotated_per_row * rotated_per_col
         
         # Mixed layout (some normal, some rotated)
         # Try fitting normal cards first, then rotated in remaining space
-        remaining_width = self.page_width - (normal_per_row * self.card_width)
-        remaining_height = self.page_height - (normal_per_col * self.card_height)
+        remaining_width = self.usable_width - (normal_per_row * self.card_width)
+        remaining_height = self.usable_height - (normal_per_col * self.card_height)
         
         extra_rotated_in_width = int(remaining_width / self.card_height) * normal_per_col
         extra_rotated_in_height = int(remaining_height / self.card_width) * normal_per_row
@@ -615,15 +622,15 @@ class CardGenerator:
             if self.layout_type == 'normal':
                 row = page_idx // self.cards_per_row
                 col = page_idx % self.cards_per_row
-                x = col * self.card_width
-                y = self.page_height - (row + 1) * self.card_height
+                x = self.printer_margins + col * self.card_width
+                y = self.page_height - self.printer_margins - (row + 1) * self.card_height
                 self.draw_card(c, x, y, card_data, rotated=False)
                 
             elif self.layout_type == 'rotated':
                 row = page_idx // self.cards_per_row
                 col = page_idx % self.cards_per_row
-                x = col * self.card_height
-                y = self.page_height - (row + 1) * self.card_width
+                x = self.printer_margins + col * self.card_height
+                y = self.page_height - self.printer_margins - (row + 1) * self.card_width
                 self.draw_card(c, x, y, card_data, rotated=True)
                 
             else:  # mixed layout
@@ -632,20 +639,20 @@ class CardGenerator:
                     # Normal orientation
                     row = page_idx // self.cards_per_row
                     col = page_idx % self.cards_per_row
-                    x = col * self.card_width
-                    y = self.page_height - (row + 1) * self.card_height
+                    x = self.printer_margins + col * self.card_width
+                    y = self.page_height - self.printer_margins - (row + 1) * self.card_height
                     self.draw_card(c, x, y, card_data, rotated=False)
                 else:
                     # Rotated orientation in remaining space
                     extra_idx = page_idx - normal_cards
                     # Place rotated cards in remaining width space
-                    remaining_width = self.page_width - (self.cards_per_row * self.card_width)
+                    remaining_width = self.usable_width - (self.cards_per_row * self.card_width)
                     if remaining_width >= self.card_height:
                         rotated_col = int(remaining_width / self.card_height)
                         row = extra_idx // rotated_col
                         col = extra_idx % rotated_col
-                        x = self.cards_per_row * self.card_width + col * self.card_height
-                        y = self.page_height - (row + 1) * self.card_width
+                        x = self.printer_margins + self.cards_per_row * self.card_width + col * self.card_height
+                        y = self.page_height - self.printer_margins - (row + 1) * self.card_width
                         self.draw_card(c, x, y, card_data, rotated=True)
             
             # Create new page if needed
@@ -669,6 +676,7 @@ class CardGenerator:
         """
         # Mapping of faction names to logo files
         faction_logo_map = {
+            # Русские названия (старые)
             "Общие стратагемы": "general.png",
             "Абордаж": "boarding.png", 
             "Претендент": "challenger.png",
@@ -679,7 +687,17 @@ class CardGenerator:
             "Orks": "orks.png",
             "Necrons": "necrons.png",
             "Tyranids": "tyranids.png",
-            "Eldar": "eldar.png"
+            "Eldar": "eldar.png",
+            
+            # Английские названия (новые из CSV)
+            "Core Stratagems": "core.png",
+            "Adeptus Custodes": "custodes.png",
+            "Space Marines": "space_marines.png",
+            "Chaos Daemons": "chaos.png",
+            "Grey Knights": "grey_knights.png",
+            "Death Guard": "death_guard.png",
+            "Aeldari": "eldar.png",
+            "Questoris Imperialis": "imperial_knights.png",
         }
         
         # Get logo filename
@@ -749,10 +767,15 @@ Example usage:
         action='store_true',
         help='Disable gradient effects on images (use original images as-is)'
     )
-    
-    args = parser.parse_args()
-    
-    # Validate input file
+
+    parser.add_argument(
+        '--printer-margins',
+        type=float,
+        default=0.0,
+        help='Printer margins in inches (default: 0.0, typical printer: 0.25)'
+    )
+
+    args = parser.parse_args()    # Validate input file
     input_path = Path(args.input)
     if not input_path.exists():
         print(f"Error: Input file '{args.input}' not found")
@@ -764,16 +787,15 @@ Example usage:
     # Generate PDF
     try:
         generator = CardGenerator(
-            page_size=page_size, 
+            page_size=page_size,
             auto_search_images=args.auto_search,
-            gradient_enabled=not args.no_gradients
+            gradient_enabled=not args.no_gradients,
+            printer_margins=args.printer_margins
         )
         generator.generate_pdf(args.input, args.output)
         return 0
     except Exception as e:
         print(f"Error generating PDF: {e}")
         return 1
-
-
 if __name__ == '__main__':
     exit(main())
