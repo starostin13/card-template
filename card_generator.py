@@ -58,9 +58,9 @@ class CardGenerator:
         if self.gradient_enabled:
             print("Gradient effects enabled")
         
-        # Card dimensions (120mm x 65mm)
-        self.card_width = 65 * 0.0393701 * inch  # 65mm to inches
-        self.card_height = 120 * 0.0393701 * inch  # 120mm to inches
+        # Card dimensions (100mm x 60mm)
+        self.card_width = 60 * 0.0393701 * inch  # 60mm to inches
+        self.card_height = 100 * 0.0393701 * inch  # 100mm to inches
         self.card_margin = 0  # No margins between cards
         
         # Calculate optimal layout
@@ -265,18 +265,18 @@ class CardGenerator:
         # Draw header bar with individual card color
         card_color = card_data.get('color', '#2c3e50')  # Default to title_color if no color specified
         c.setFillColor(HexColor(card_color))
-        c.rect(x, y + card_h - 0.5 * inch, card_w, 0.5 * inch, stroke=0, fill=1)
+        c.rect(x, y + card_h - 0.4 * inch, card_w, 0.4 * inch, stroke=0, fill=1)
         
         # Draw title
         c.setFillColor(white)
-        c.setFont(self._get_font_name(bold=True), 12)
+        c.setFont(self._get_font_name(bold=True), 10)
         title = card_data.get('title', 'Card Title')
-        c.drawCentredString(x + card_w / 2, y + card_h - 0.3 * inch, title)
+        c.drawCentredString(x + card_w / 2, y + card_h - 0.25 * inch, title)
         
         # Draw card body
         body = card_data.get('body', {})
         if body:
-            text_y = y + card_h - 0.7 * inch
+            text_y = y + card_h - 0.55 * inch
             c.setFillColor(self.text_color)
             
             # Calculate space usage
@@ -317,25 +317,25 @@ class CardGenerator:
             if when:
                 c.setFont(self._get_font_name(bold=True), 8)
                 c.setFillColor(HexColor(card_color))  # Use card color for keyword
-                c.drawString(x + 0.1 * inch, text_y, "When:")
+                c.drawString(x + 0.08 * inch, text_y, "When:")
                 c.setFont(self._get_font_name(), 8)
                 c.setFillColor(self.text_color)  # Normal color for text
                 c.drawString(x + 0.5 * inch, text_y, when[:35])
-                text_y -= 0.15 * inch
+                text_y -= 0.13 * inch
             
             # Target
             target = body.get('target', '')
             if target:
                 c.setFont(self._get_font_name(bold=True), 8)
                 c.setFillColor(HexColor(card_color))  # Use card color for keyword
-                c.drawString(x + 0.1 * inch, text_y, "Target:")
+                c.drawString(x + 0.08 * inch, text_y, "Target:")
                 c.setFont(self._get_font_name(), 8)
                 c.setFillColor(self.text_color)  # Normal color for text
                 # Handle long target text with multiple lines
-                target_lines = self._wrap_text(target, 32)
+                target_lines = self._wrap_text(target, 35)
                 for line in target_lines[:2]:  # Max 2 lines for target
                     c.drawString(x + 0.5 * inch, text_y, line)
-                    text_y -= 0.12 * inch
+                    text_y -= 0.13 * inch
                 text_y -= 0.03 * inch
             
             # Effect
@@ -343,14 +343,14 @@ class CardGenerator:
             if effect:
                 c.setFont(self._get_font_name(bold=True), 8)
                 c.setFillColor(HexColor(card_color))  # Use card color for keyword
-                c.drawString(x + 0.1 * inch, text_y, "Effect:")
+                c.drawString(x + 0.08 * inch, text_y, "Effect:")
                 c.setFont(self._get_font_name(), 8)
                 c.setFillColor(self.text_color)  # Normal color for text
                 # Handle long effect text
-                effect_lines = self._wrap_text(effect, 32)
+                effect_lines = self._wrap_text(effect, 35)
                 for line in effect_lines[:2]:  # Max 2 lines
                     c.drawString(x + 0.5 * inch, text_y, line)
-                    text_y -= 0.12 * inch
+                    text_y -= 0.13 * inch
                 text_y -= 0.03 * inch
             
             # Restriction
@@ -358,13 +358,13 @@ class CardGenerator:
             if restriction and restriction.lower() != 'none':
                 c.setFont(self._get_font_name(bold=True), 8)
                 c.setFillColor(HexColor(card_color))  # Use card color for "Restriction:" keyword
-                c.drawString(x + 0.1 * inch, text_y, "Restriction:")
+                c.drawString(x + 0.08 * inch, text_y, "Restriction:")
                 c.setFont(self._get_font_name(), 8)
                 c.setFillColor(self.text_color)  # Use same text color as other fields
                 restriction_lines = self._wrap_text(restriction, 35)
                 for line in restriction_lines[:2]:  # Max 2 lines
                     c.drawString(x + 0.7 * inch, text_y, line)
-                    text_y -= 0.1 * inch
+                    text_y -= 0.13 * inch
         
         # Draw bottom section with mana cost, faction logo, and cost breakdown
         cost_data = card_data.get('cost', {})
@@ -388,7 +388,7 @@ class CardGenerator:
             c.setStrokeColor(black)
             c.circle(cost_x, cost_y, 0.12 * inch, stroke=1, fill=1)
             c.setFillColor(black)
-            c.setFont(self._get_font_name(bold=True), 8)
+            c.setFont(self._get_font_name(bold=True), 7)
             c.drawCentredString(cost_x, cost_y - 0.03 * inch, str(total_cost))
         
         # Draw mana cost breakdown in center bottom
@@ -771,8 +771,8 @@ Example usage:
     parser.add_argument(
         '--printer-margins',
         type=float,
-        default=0.0,
-        help='Printer margins in inches (default: 0.0, typical printer: 0.25)'
+        default=0.2,
+        help='Printer margins in inches (default: 0.2 = ~5mm)'
     )
 
     args = parser.parse_args()    # Validate input file
